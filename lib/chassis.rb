@@ -31,6 +31,7 @@ module Chassis
       set :show_exceptions, false
     end
 
+    use Manifold::Middleware
     use Rack::BounceFavicon
     use MultiJsonBodyParser
   end

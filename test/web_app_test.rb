@@ -36,4 +36,16 @@ class WebAppTest < MiniTest::Unit::TestCase
       get '/foo'
     end
   end
+
+  def test_cors_support_is_on_by_default
+    @app = Class.new(Chassis::WebApp) do
+      get '/foo' do
+        'Hello World'
+      end
+    end
+
+    options '/foo', { }, { 'HTTP_ACCESS_CONTROL_REQUEST_METHOD' => 'POST', 'HTTP_ACCESS_CONTROL_REQUEST_HEADERS' => 'bar' }
+
+    assert last_response.headers.key?('Access-Control-Allow-Origin')
+  end
 end
