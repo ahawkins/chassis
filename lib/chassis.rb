@@ -2,6 +2,7 @@ require "chassis/version"
 
 require 'multi_json'
 require 'sinatra'
+require 'rack/contrib/bounce_favicon'
 require 'rack/contrib/post_body_content_type_parser'
 
 module Chassis
@@ -29,6 +30,7 @@ module Chassis
       set :show_exceptions, false
     end
 
-    use MultiJsonBodyParser 
+    use Rack::BounceFavicon
+    use MultiJsonBodyParser
   end
 end

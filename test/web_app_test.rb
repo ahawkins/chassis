@@ -7,6 +7,12 @@ class WebAppTest < MiniTest::Unit::TestCase
 
   attr_reader :app
 
+  def test_404s_on_favicon_requests
+    @app = Class.new(Chassis::WebApp)
+    get '/favicon.ico'
+    assert_equal 404, last_response.status
+  end
+
   def test_parses_json_bodies
     @app = Class.new(Chassis::WebApp) do
       post '/foo' do
