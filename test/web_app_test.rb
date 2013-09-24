@@ -8,7 +8,15 @@ class WebAppTest < MiniTest::Unit::TestCase
   attr_reader :app
 
   def test_parses_json_bodies
-    flunk
+    @app = Class.new(Chassis::WebApp) do
+      post '/foo' do
+        status 200
+        MultiJson.dump params.fetch('test')
+      end
+    end
+
+    post '/foo', MultiJson.dump(test: { these: :params }), 'CONTENT_TYPE' => 'application/json'
+    assert_equal MultiJson.dump(these: :params), last_response.body
   end
 
   def test_raises_errors
