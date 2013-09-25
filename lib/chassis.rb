@@ -46,6 +46,7 @@ module Chassis
     end
 
     use StatusCheck
+    use Rack::Runtime
     use Manifold::Middleware
     use Rack::BounceFavicon
     use MultiJsonBodyParser

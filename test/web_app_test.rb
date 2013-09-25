@@ -14,6 +14,18 @@ class WebAppTest < MiniTest::Unit::TestCase
     assert_equal 'text/plain', last_response.headers.fetch('Content-Type')
   end
 
+  def test_measures_runtime
+    @app = Class.new(Chassis::WebApp) do
+      get '/timing' do
+        'hi'
+      end
+    end
+
+    get '/timing'
+    assert_equal 200, last_response.status
+    assert last_response.headers.key?('X-Runtime')
+  end
+
   def test_404s_on_favicon_requests
     @app = Class.new(Chassis::WebApp)
     get '/favicon.ico'
