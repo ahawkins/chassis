@@ -67,4 +67,18 @@ class WebAppTest < MiniTest::Unit::TestCase
 
     assert last_response.headers.key?('Access-Control-Allow-Origin')
   end
+
+  def test_conditional_get_support
+    @app = Class.new(Chassis::WebApp) do
+      get '/cached' do
+        cache_control :public
+        etag 'hash'
+        'Hello World'
+      end
+    end
+
+    get '/cached', { }, { "HTTP_IF_NONE_MATCH" => '"hash"' }
+
+    assert_equal 304, last_response.status
+  end
 end
