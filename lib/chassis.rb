@@ -19,6 +19,20 @@ module Chassis
       end
     end
 
+    class StatusCheck
+      def initialize(app)
+        @app = app
+      end
+
+      def call(env)
+        if env.fetch('PATH_INFO') == '/status'
+          [200, { 'Content-Type' => 'text/plain' }, ['Goliath Online!']]
+        else
+          @app.call env
+        end
+      end
+    end
+
     configure do
       # Don't log them. We'll do that ourself
       set :dump_errors, false
@@ -31,6 +45,7 @@ module Chassis
       set :show_exceptions, false
     end
 
+    use StatusCheck
     use Manifold::Middleware
     use Rack::BounceFavicon
     use MultiJsonBodyParser
