@@ -99,7 +99,9 @@ class WebAppTest < MiniTest::Unit::TestCase
 
   def test_wraps_errors_in_json_when_configured
     @app = Class.new(Chassis::WebApp) do
-      use Chassis::WebApp::ExceptionHandling
+      configure do
+        set :show_exceptions, true
+      end
 
       get '/error' do
         raise TestError

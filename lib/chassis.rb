@@ -35,7 +35,7 @@ module Chassis
       end
     end
 
-    class ExceptionHandling
+    class ShowExceptions
       def initialize(app, include_trace = true)
         @app, @include_trace = app, include_trace
       end
@@ -52,15 +52,6 @@ module Chassis
       end
     end
 
-    configure do
-      # Don't capture any errors. Throw them up the stack
-      set :raise_errors, true
-
-      # Disable internal middleware for presenting errors
-      # as useful HTML pages
-      set :show_exceptions, false
-    end
-
     use StatusCheck
     use Rack::BounceFavicon
     use Manifold::Middleware
@@ -68,5 +59,17 @@ module Chassis
     use Harness::RackInstrumenter
     use Rack::Deflater
     use MultiJsonBodyParser
+
+    class << self
+      def setup_default_middleware(builder)
+        builder.use ::Sinatra::ExtendedRack
+        builder.use ShowExceptions       if show_exceptions?
+        builder.use Rack::MethodOverride if method_override?
+        builder.use Rack::Head
+        setup_logging    builder
+        setup_sessions   builder
+        setup_protection builder
+      end
+    end
   end
 end
