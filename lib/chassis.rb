@@ -35,6 +35,27 @@ module Chassis
       end
     end
 
+    class ExceptionHandling
+      def initialize(app, include_trace = true)
+        @app, @include_trace = app, include_trace
+      end
+
+      def call(env)
+        begin
+          @app.call env
+        rescue => ex
+          env['rack.errors'].write ex.to_s
+          env['rack.errors'].write ex.backtrace.join("\n")
+          env['rack.errors'].flush
+
+          hash = { message: ex.to_s }
+          hash[:backtrace] = ex.backtrace if @include_trace
+
+          [500, {'Content-Type' => 'application/json'}, [MultiJson.dump(hash)]]
+        end
+      end
+    end
+
     configure do
       # Don't log them. We'll do that ourself
       set :dump_errors, false

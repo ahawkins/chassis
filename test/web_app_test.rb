@@ -3,7 +3,11 @@ require_relative 'test_helper'
 class WebAppTest < MiniTest::Unit::TestCase
   include Rack::Test::Methods
 
-  TestError = Class.new StandardError
+  class TestError < StandardError
+    def to_s
+      'test_error'
+    end
+  end
 
   attr_reader :app
 
@@ -91,5 +95,23 @@ class WebAppTest < MiniTest::Unit::TestCase
 
     get '/zipped', { }, { "HTTP_ACCEPT_ENCODING" => 'gzip' }
     assert_equal 'gzip', last_response.headers.fetch('Content-Encoding')
+  end
+
+  def test_wraps_errors_in_json_when_configured
+    @app = Class.new(Chassis::WebApp) do
+      use Chassis::WebApp::ExceptionHandling
+
+      get '/error' do
+        raise TestError
+      end
+    end
+
+    get '/error'
+    assert_equal 500, last_response.status
+    assert_equal 'application/json', last_response.content_type
+    json = MultiJson.load last_response.body
+
+    assert_equal 'test_error', json.fetch('message')
+    assert_kind_of Array, json.fetch('backtrace')
   end
 end
