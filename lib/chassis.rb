@@ -18,3 +18,4 @@ end
 
 require_relative 'chassis/web_app'
 require_relative 'chassis/form'
+require_relative 'chassis/repo'
