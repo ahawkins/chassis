@@ -6,6 +6,8 @@ require 'manifold'
 require 'rack/contrib/bounce_favicon'
 require 'rack/contrib/post_body_content_type_parser'
 
+require 'harness'
+
 module Chassis
   class WebApp < Sinatra::Base
     class MultiJsonBodyParser < Rack::PostBodyContentTypeParser
@@ -46,10 +48,11 @@ module Chassis
     end
 
     use StatusCheck
-    use Rack::Runtime
-    use Rack::Deflater
-    use Manifold::Middleware
     use Rack::BounceFavicon
+    use Manifold::Middleware
+    use Rack::Runtime
+    use Harness::RackInstrumenter
+    use Rack::Deflater
     use MultiJsonBodyParser
   end
 end
