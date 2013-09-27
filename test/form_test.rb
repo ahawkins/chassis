@@ -1,5 +1,4 @@
 require_relative 'test_helper'
-require 'debugger'
 
 class FormTest < MiniTest::Unit::TestCase
   class Form < Chassis::Form

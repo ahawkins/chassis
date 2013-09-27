@@ -19,7 +19,6 @@ module Chassis
     def initialize(hash = {})
       assert_valid_keys! hash.symbolize_keys
       super
-      yield self if block_given?
     end
 
     def attributes
