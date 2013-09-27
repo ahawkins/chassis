@@ -21,3 +21,4 @@ require_relative 'chassis/form'
 require_relative 'chassis/repo'
 
 require_relative 'chassis/dirty_tracking'
+require_relative 'chassis/observable'
