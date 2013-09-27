@@ -6,6 +6,14 @@ class FormTest < MiniTest::Unit::TestCase
     attribute :email, String
   end
 
+  def test_initializer_takes_a_block
+    form = Form.new do |f|
+      f.name = 'Adam'
+    end
+
+    assert_equal 'Adam', form.name
+  end
+
   def test_attributes_only_includes_dirty_attributes
     form = Form.new name: 'Adam'
     assert_equal({ name: 'Adam' }, form.attributes)
