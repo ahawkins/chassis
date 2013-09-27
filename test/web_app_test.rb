@@ -81,4 +81,15 @@ class WebAppTest < MiniTest::Unit::TestCase
 
     assert_equal 304, last_response.status
   end
+
+  def test_serves_compressed_responses
+    @app = Class.new(Chassis::WebApp) do
+      get '/zipped' do
+        "We be zippin'"
+      end
+    end
+
+    get '/zipped', { }, { "HTTP_ACCEPT_ENCODING" => 'gzip' }
+    assert_equal 'gzip', last_response.headers.fetch('Content-Encoding')
+  end
 end
