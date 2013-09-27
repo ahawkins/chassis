@@ -44,10 +44,6 @@ module Chassis
         begin
           @app.call env
         rescue => ex
-          env['rack.errors'].write ex.to_s
-          env['rack.errors'].write ex.backtrace.join("\n")
-          env['rack.errors'].flush
-
           hash = { message: ex.to_s }
           hash[:backtrace] = ex.backtrace if @include_trace
 
@@ -57,9 +53,6 @@ module Chassis
     end
 
     configure do
-      # Don't log them. We'll do that ourself
-      set :dump_errors, false
-
       # Don't capture any errors. Throw them up the stack
       set :raise_errors, true
 
