@@ -12,75 +12,71 @@ module Chassis
       end
     end
 
-    class << self
-      def backend
-        @backend
-      end
+    attr_reader :backend
 
-      def backend=(backend)
-        @backend = backend
-      end
+    def initialize(backend = Repo.backend)
+      @backend = backend
+    end
 
-      def initialize_storage!
-        backend.initialize_storage!
-      end
+    def initialize_storage!
+      backend.initialize_storage!
+    end
 
-      def clear
-        backend.clear
-      end
+    def clear
+      backend.clear
+    end
 
-      def count(klass)
-        backend.count klass
-      end
+    def count(klass)
+      backend.count klass
+    end
 
-      def find(klass, id)
-        raise ArgumentError, "id cannot be nil!" if id.nil?
-        backend.find klass, id
-      end
+    def find(klass, id)
+      raise ArgumentError, "id cannot be nil!" if id.nil?
+      backend.find klass, id
+    end
 
-      def save(record)
-        if record.id
-          backend.update record
-        else
-          backend.create record
-        end
+    def save(record)
+      if record.id
+        backend.update record
+      else
+        backend.create record
       end
+    end
 
-      def delete(record)
-        backend.delete record
-      end
+    def delete(record)
+      backend.delete record
+    end
 
-      def first(klass)
-        backend.first klass
-      end
+    def first(klass)
+      backend.first klass
+    end
 
-      def last(klass)
-        backend.last klass
-      end
+    def last(klass)
+      backend.last klass
+    end
 
-      def all(klass)
-        backend.all klass
-      end
+    def all(klass)
+      backend.all klass
+    end
 
-      def query(klass, selector)
-        backend.query klass, selector
-      end
+    def query(klass, selector)
+      backend.query klass, selector
+    end
 
-      def graph(klass, id)
-        backend.graph klass, id
-      end
+    def graph(klass, id)
+      backend.graph klass, id
+    end
 
-      def graph_query(klass, selector)
-        backend.graph_query klass, selector
-      end
+    def graph_query(klass, selector)
+      backend.graph_query klass, selector
+    end
 
-      def sample(klass)
-        backend.sample klass
-      end
+    def sample(klass)
+      backend.sample klass
+    end
 
-      def reset
-        backend.reset
-      end
+    def reset
+      backend.reset
     end
 
     class InMemoryBackend
@@ -185,60 +181,6 @@ module Chassis
 
       def reset
 
-      end
-    end
-
-    module Delegation
-      extend ActiveSupport::Concern
-
-      module ClassMethods
-        def save(record)
-          Repo.save(record)
-        end
-
-        def all
-          Repo.all object_class
-        end
-
-        def count
-          Repo.count object_class
-        end
-
-        def find(id)
-          Repo.find object_class, id
-        end
-
-        def delete(record)
-          Repo.delete record
-        end
-
-        def first
-          Repo.first object_class
-        end
-
-        def last
-          Repo.last object_class
-        end
-
-        def query(selector)
-          Repo.query object_class, selector
-        end
-
-        def sample
-          Repo.sample object_class
-        end
-
-        def graph(id)
-          Repo.graph object_class, id
-        end
-
-        def graph_query(selector)
-          Repo.graph_query object_class, selector
-        end
-
-        def object_class
-          @object_class ||= self.to_s.match(/^(.+)Repo/)[1].constantize
-        end
       end
     end
   end
