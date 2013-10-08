@@ -21,5 +21,7 @@ require_relative 'chassis/web_app'
 require_relative 'chassis/form'
 require_relative 'chassis/repo'
 
+require_relative 'chassis/request_logger'
+
 require_relative 'chassis/dirty_tracking'
 require_relative 'chassis/observable'
