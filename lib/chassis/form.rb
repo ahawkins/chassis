@@ -2,7 +2,7 @@ module Chassis
   class Form
     class UnknownField < StandardError ; end
 
-    include Virtus.model(mass_assignment: false)
+    include Virtus.model
     include Virtus::Dirty
 
     class << self 
