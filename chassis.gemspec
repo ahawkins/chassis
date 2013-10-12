@@ -22,9 +22,10 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rack-contrib"
   spec.add_dependency "multi_json"
   spec.add_dependency "manifold"
+  spec.add_dependency "prox"
   spec.add_dependency "harness"
   spec.add_dependency "harness-rack"
-  spec.add_dependency "virtus", "1.0.0rc2"
+  spec.add_dependency "virtus", "1.0.0.rc2"
   spec.add_dependency "virtus-dirty"
 
   spec.add_development_dependency "bundler", "~> 1.3"
