@@ -28,6 +28,7 @@ require_relative 'chassis/repo'
 
 require_relative 'chassis/request_logger'
 require_relative 'chassis/no_robots'
+require_relative 'chassis/status_check'
 
 require_relative 'chassis/hash_initializer'
 
