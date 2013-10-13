@@ -11,20 +11,6 @@ module Chassis
       end
     end
 
-    class StatusCheck
-      def initialize(app)
-        @app = app
-      end
-
-      def call(env)
-        if env.fetch('PATH_INFO') == '/status'
-          [200, { 'Content-Type' => 'text/plain' }, ['Goliath Online!']]
-        else
-          @app.call env
-        end
-      end
-    end
-
     class ShowExceptions
       def initialize(app, include_trace = true)
         @app, @include_trace = app, include_trace
@@ -42,7 +28,7 @@ module Chassis
       end
     end
 
-    use StatusCheck
+    use Chassis::StatusCheck
     use Rack::BounceFavicon
     use Manifold::Middleware
     use Rack::Runtime

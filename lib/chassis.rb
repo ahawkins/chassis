@@ -22,7 +22,6 @@ Proxy = Prox
 module Chassis
 end
 
-require_relative 'chassis/web_app'
 require_relative 'chassis/form'
 require_relative 'chassis/repo'
 
@@ -34,3 +33,5 @@ require_relative 'chassis/hash_initializer'
 
 require_relative 'chassis/dirty_tracking'
 require_relative 'chassis/observable'
+
+require_relative 'chassis/web_app'
