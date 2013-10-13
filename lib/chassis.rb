@@ -33,5 +33,6 @@ require_relative 'chassis/rack/request_logger'
 require_relative 'chassis/rack/no_robots'
 require_relative 'chassis/rack/status_check'
 require_relative 'chassis/rack/builder_shim_patch'
+require_relative 'chassis/rack/json_body_parser'
 
 require_relative 'chassis/web_app'
