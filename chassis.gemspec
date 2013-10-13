@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Chassis::VERSION
   spec.authors       = ["ahawkins"]
   spec.email         = ["adam@hawkins.io"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{A collection of modules and helpers for building mantainable Ruby applications}
+  spec.summary       = %q{}
   spec.homepage      = ""
   spec.license       = "MIT"
 
