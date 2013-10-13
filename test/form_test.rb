@@ -16,7 +16,7 @@ class FormTest < MiniTest::Unit::TestCase
 
   def test_attributes_only_includes_dirty_attributes
     form = Form.new name: 'Adam'
-    assert_equal({ name: 'Adam' }, form.attributes)
+    assert_equal({ name: 'Adam' }, form.values)
   end
 
   def test_assigning_an_known_attributes_raises_an_error

@@ -12,8 +12,6 @@ require 'harness/rack'
 require 'virtus'
 require 'virtus/dirty'
 
-require 'active_support/concern'
-
 require 'prox'
 
 Proxy = Prox

@@ -22,7 +22,7 @@ module Chassis
       yield self if block_given?
     end
 
-    def attributes
+    def values
       dirty_attributes
     end
 
