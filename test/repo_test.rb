@@ -1,59 +1,75 @@
 require_relative 'test_helper'
 
-class RepoTest < MiniTest::Unit::TestCase
-  Person = Struct.new :name do
-    attr_accessor :id
+class RepoDelegationTest < MiniTest::Unit::TestCase
+  class PersonRepo
+    extend Chassis::Repo::Delegation
+
+    def self.obj_class
+      Person
+    end
   end
 
-  attr_reader :repo
+  Person = Struct.new :name
+
+  attr_reader :target, :person
+
+  def repo
+    PersonRepo
+  end
 
   def setup
-    @repo = Chassis::Repo.new Chassis::Repo::InMemoryBackend.new
-    repo.initialize_storage!
+    @target = mock
+    @person = Person.new 'ahawkins'
+    Chassis::Repo.stubs(:instance).returns(target)
   end
 
-  def test_crud_operations
-    person = Person.new 'ahawkins'
-    repo.save person
-    assert person.id, "Repo must set the ID after creating"
+  def test_find_delegates_to_the_target
+    target.expects(:find).with(Person, 1)
+    repo.find(1)
+  end
 
-    assert_equal 1, repo.count(Person)
-
-    assert_equal person, repo.find(Person, person.id)
-
-    assert_equal [person], repo.all(Person)
-
-    person.name = 'adam'
-    repo.save person
-    assert_equal 'adam', repo.find(Person, person.id).name
-
+  def test_delete_delegates_to_the_target
+    target.expects(:delete).with(person)
     repo.delete(person)
-
-    assert_equal 0, repo.count(Person)
   end
 
-  def test_first_and_last
-    adam = Person.new 'ahawkins'
-    peter = Person.new 'pepps'
-
-    repo.save adam
-    repo.save peter
-
-    assert_equal adam, repo.first(Person)
-    assert_equal peter, repo.last(Person)
+  def test_save_delegates_to_the_target
+    target.expects(:save).with(person)
+    repo.save(person)
   end
 
-  def test_clear_wipes_data
-    adam = Person.new 'ahawkins'
-    repo.save adam
+  def test_first_delegates_to_the_target
+    target.expects(:first).with(Person)
+    repo.first
+  end
 
-    refute_empty repo.all(Person)
-    assert_equal 1, repo.count(Person)
-    assert repo.find(Person, adam.id)
+  def test_last_delegates_to_the_target
+    target.expects(:last).with(Person)
+    repo.last
+  end
 
-    repo.clear
+  def test_all_delegates_to_the_target
+    target.expects(:all).with(Person)
+    repo.all
+  end
 
-    assert_empty repo.all(Person)
-    assert_equal 0, repo.count(Person)
+  def test_count_delegates_to_the_target
+    target.expects(:count).with(Person)
+    repo.count
+  end
+
+  def test_query_delegates_to_the_target
+    target.expects(:query).with(Person, :foo)
+    repo.query :foo
+  end
+
+  def test_graph_query_delegates_to_the_target
+    target.expects(:graph_query).with(Person, :foo)
+    repo.graph_query(:foo)
+  end
+
+  def test_sample_delegates_to_the_backend
+    target.expects(:sample).with(Person)
+    repo.sample
   end
 end

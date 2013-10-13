@@ -1,8 +1,6 @@
-require 'active_support/concern'
-
 module Chassis
   class Repo
-    class RecordNotFound < StandardError
+    class RecordNotFoundError < StandardError
       def initialize(klass, id)
         @klass, @id = klass, id
       end
@@ -12,7 +10,35 @@ module Chassis
       end
     end
 
-    attr_reader :backend
+    class QueryNotImplementedError < StandardError
+      def initialize(selector)
+        @selector = selector
+      end
+
+      def to_s
+        "Adapter does not support #{@selector.class}!"
+      end
+    end
+
+    class GraphQueryNotImplementedError < StandardError
+      def initialize(selector)
+        @selector = selector
+      end
+
+      def to_s
+        "Adapter does not know how to graph #{@selector.class}!"
+      end
+    end
+
+    include Singleton
+
+    def self.backend
+      @backend
+    end
+
+    def self.backend=(backend)
+      @backend = backend
+    end
 
     def initialize(backend = Repo.backend)
       @backend = backend
@@ -74,114 +100,9 @@ module Chassis
     def sample(klass)
       backend.sample klass
     end
-
-    def reset
-      backend.reset
-    end
-
-    class InMemoryBackend
-      def initialize_storage!
-        @counter = 0
-        @map = {}
-      end
-
-      def create(record)
-        @counter = @counter + 1
-        record.id ||= @counter
-        map_for(record)[record.id] = record
-      end
-
-      def update(record)
-        map_for(record)[record.id] = record
-      end
-
-      def delete(record)
-        map_for(record).delete record.id
-      end
-
-      def count(klass)
-        map_for_class(klass).count
-      end
-
-      def find(klass, id)
-        record = map_for_class(klass)[id]
-
-        raise Repo::RecordNotFound.new(klass, id) unless record
-
-        record
-      end
-
-      def clear
-        @map.clear
-      end
-      alias :reset :clear
-
-      def all(klass)
-        map_for_class(klass).values
-      end
-
-      def first(klass)
-        all(klass).first
-      end
-
-      def last(klass)
-        all(klass).last
-      end
-
-      def sample(klass)
-        all(klass).sample
-      end
-
-      def map_for_class(klass)
-        @map[klass.to_s.to_sym] ||= {}
-      end
-
-      def map_for(record)
-        map_for_class(record.class)
-      end
-    end
-
-    class NullBackend
-      def initialize_storage!
-        @counter = 0
-      end
-
-      def create(record)
-        @counter = @counter + 1
-        record.id ||= @counter
-      end
-
-      def update(record)
-
-      end
-
-      def delete(record)
-
-      end
-
-      def clear
-
-      end
-
-      def count
-
-      end
-
-      def first
-
-      end
-
-      def all(klass)
-        [ ]
-      end
-
-      def query(klass, q)
-
-      end
-
-      def reset
-
-      end
-    end
   end
 end
+
+require_relative 'repo/in_memory_adapter'
+require_relative 'repo/null_adapter'
+require_relative 'repo/delegation'

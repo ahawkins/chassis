@@ -8,6 +8,7 @@ class HashInitializerTest < MiniTest::Unit::TestCase
   end
 
   def test_sets_attributes
-
+    person = Person.new nick: 'ahawkins'
+    assert_equal 'ahawkins', person.nick
   end
 end
