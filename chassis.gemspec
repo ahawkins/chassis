@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "prox"
   spec.add_dependency "harness"
   spec.add_dependency "harness-rack"
-  spec.add_dependency "virtus", "1.0.0.rc2"
+  spec.add_dependency "virtus", "1.0.0"
   spec.add_dependency "virtus-dirty"
 
   spec.add_development_dependency "bundler", "~> 1.3"
