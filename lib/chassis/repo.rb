@@ -1,3 +1,5 @@
+require 'singleton'
+
 module Chassis
   class Repo
     class RecordNotFoundError < StandardError
