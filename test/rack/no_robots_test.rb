@@ -1,6 +1,6 @@
-require_relative 'test_helper'
+require_relative '../test_helper'
 
-class StatusCheckTest < MiniTest::Unit::TestCase
+class NoRobotsTest < MiniTest::Unit::TestCase
   include Rack::Test::Methods
 
   class HelloWorld
@@ -14,17 +14,16 @@ class StatusCheckTest < MiniTest::Unit::TestCase
   def setup
     @log = StringIO.new
     builder = Rack::Builder.new
-    builder.use ::Chassis::StatusCheck
+    builder.use Chassis::Rack::NoRobots
     builder.run HelloWorld.new
     @app = builder.to_app
   end
 
   def test_does_not_allow_any_robots
-    get '/status'
+    get '/robots.txt'
 
-    assert_equal 200, last_response.status
-    assert_equal 'text/plain', last_response.content_type
-    assert_equal 'Goliath online!', last_response.body
+    assert_includes last_response.body, 'Disallow: /'
+    assert_includes last_response.body, 'User Agent: *'
   end
 
   def test_allows_other_requests
