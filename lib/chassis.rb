@@ -1,6 +1,5 @@
 require "chassis/version"
 
-require 'multi_json'
 require 'sinatra'
 require 'manifold'
 require 'rack/contrib/bounce_favicon'
