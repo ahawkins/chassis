@@ -21,7 +21,6 @@ module Chassis
         "Adapter does not support #{@selector.class}!"
       end
     end
-
     class GraphQueryNotImplementedError < StandardError
       def initialize(selector)
         @selector = selector
@@ -33,6 +32,8 @@ module Chassis
     end
 
     include Singleton
+
+    attr_reader :backend
 
     def self.backend
       @backend
@@ -101,6 +102,10 @@ module Chassis
 
     def sample(klass)
       backend.sample klass
+    end
+
+    def empty?(klass)
+      backend.empty?(klass)
     end
   end
 end

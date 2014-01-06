@@ -72,4 +72,9 @@ class RepoDelegationTest < MiniTest::Unit::TestCase
     target.expects(:sample).with(Person)
     repo.sample
   end
+
+  def test_empty_delegates_to_the_backend
+    target.expects(:empty?).with(Person)
+    repo.empty?
+  end
 end

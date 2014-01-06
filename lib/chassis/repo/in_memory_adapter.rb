@@ -53,6 +53,10 @@ module Chassis
         all(klass).sample
       end
 
+      def empty?(klass)
+        all(klass).empty?
+      end
+
       def query(klass, selector)
         if query_implemented? klass, selector
           send query_method(klass, selector), klass, selector

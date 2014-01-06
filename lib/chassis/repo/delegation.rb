@@ -37,6 +37,10 @@ module Chassis
         backend.sample object_class
       end
 
+      def empty?
+        backend.empty? object_class
+      end
+
       def graph(id)
         backend.graph object_class, id
       end
