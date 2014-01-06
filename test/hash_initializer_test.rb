@@ -11,4 +11,12 @@ class HashInitializerTest < MiniTest::Unit::TestCase
     person = Person.new nick: 'ahawkins'
     assert_equal 'ahawkins', person.nick
   end
+
+  def test_works_with_a_block
+    person = Person.new do |person|
+      person.nick = 'ahawkins'
+    end
+
+    assert_equal 'ahawkins', person.nick
+  end
 end
