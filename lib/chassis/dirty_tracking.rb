@@ -1,10 +1,7 @@
 require 'set'
-require 'active_support/concern'
 
 module Chassis
   module DirtyTracking
-    extend ActiveSupport::Concern
-
     module ClassMethods
       def dirty_accessor(*names)
         names.each do |attribute|
@@ -35,6 +32,12 @@ module Chassis
             end
           RUBY
         end
+      end
+    end
+
+    class << self
+      def included(base)
+        base.extend ClassMethods
       end
     end
 
