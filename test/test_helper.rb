@@ -9,3 +9,5 @@ require 'minitest/autorun'
 require 'minitest/hell'
 require 'rack/test'
 require 'mocha/setup'
+
+require 'stringio'

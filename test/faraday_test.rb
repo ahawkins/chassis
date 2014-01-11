@@ -1,5 +1,4 @@
 require_relative "test_helper"
-require 'stringio'
 
 class FaradayTest < MiniTest::Unit::TestCase
   def setup

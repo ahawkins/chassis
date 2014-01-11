@@ -1,5 +1,4 @@
 require_relative '../test_helper'
-require 'stringio'
 
 class RackBouncer < MiniTest::Unit::TestCase
   include Rack::Test::Methods
