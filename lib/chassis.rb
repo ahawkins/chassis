@@ -1,5 +1,7 @@
 require "chassis/version"
 
+require 'logger-better'
+
 require 'sinatra'
 require 'manifold'
 require 'rack/contrib/bounce_favicon'
@@ -13,10 +15,25 @@ require 'virtus/dirty'
 
 require 'prox'
 
+require 'faraday'
+
 Proxy = Prox
 
 module Chassis
+  class << self
+    def stream
+      @stream
+    end
+
+    def stream=(stream)
+      @stream = stream
+    end
+  end
 end
+
+require_relative 'chassis/logger'
+
+require_relative 'chassis/faraday'
 
 require_relative 'chassis/form'
 require_relative 'chassis/repo'
