@@ -59,6 +59,15 @@ class WebServiceTest < MiniTest::Unit::TestCase
     assert_equal 'value', last_response.body
   end
 
+  def test_blocks_robots
+    @app = Class.new Chassis::WebService
+
+    get '/robots.txt'
+
+    assert_equal 200, last_response.status
+    assert_includes last_response.body, "Disallow: /"
+  end
+
   private
   def assert_json(response)
     assert_includes response.content_type, 'application/json'
