@@ -47,6 +47,18 @@ class WebServiceTest < MiniTest::Unit::TestCase
     assert_error_message last_response
   end
 
+  def test_parses_json_requests
+    @app = Class.new Chassis::WebService do
+      post '/' do
+        params.fetch('json').fetch('key')
+      end
+    end
+
+    post '/', JSON.dump(json: { key: 'value' }), 'CONTENT_TYPE' => 'application/json'
+
+    assert_equal 'value', last_response.body
+  end
+
   private
   def assert_json(response)
     assert_includes response.content_type, 'application/json'

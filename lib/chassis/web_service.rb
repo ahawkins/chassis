@@ -51,5 +51,6 @@ module Chassis
 
     use ::Rack::BounceFavicon
     use ::Rack::Deflater
+    use ::Rack::PostBodyContentTypeParser
   end
 end
