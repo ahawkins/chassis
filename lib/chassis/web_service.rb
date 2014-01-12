@@ -54,5 +54,14 @@ module Chassis
     use ::Rack::BounceFavicon
     use ::Rack::Deflater
     use ::Rack::PostBodyContentTypeParser
+
+    set :cors, false
+
+    class << self
+      def setup_default_middleware(builder)
+        super
+        builder.use Manifold::Middleware if settings.cors?
+      end
+    end
   end
 end

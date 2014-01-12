@@ -71,6 +71,20 @@ class WebServiceTest < MiniTest::Unit::TestCase
     assert_middleware app.middleware, Rack::Deflater
   end
 
+  def test_can_enable_cors
+    @app = Class.new Chassis::WebService do
+      enable :cors 
+
+      get '/' do
+        'hi'
+      end
+    end
+
+    options '/'
+
+    assert_equal '*', last_response.headers.fetch('Access-Control-Allow-Origin')
+  end
+
   private
   def assert_json(response)
     assert_includes response.content_type, 'application/json'
@@ -84,5 +98,10 @@ class WebServiceTest < MiniTest::Unit::TestCase
   def assert_middleware(stack, klass)
     klasses = stack.map { |m| m.first }
     assert_includes klasses, klass, "#{klass} should be in the middleware stack"
+  end
+
+  def refute_middleware(stack, klass)
+    klasses = stack.map { |m| m.first }
+    refute_includes klasses, klass, "#{klass} should not be in the middleware stack"
   end
 end
