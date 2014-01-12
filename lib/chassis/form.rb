@@ -3,7 +3,7 @@ module Chassis
     class UnknownField < StandardError ; end
 
     include Virtus.model
-    include Virtus::Dirty
+    include Virtus::DirtyAttribute
 
     class << self 
       def attribute(name, type, options = {})

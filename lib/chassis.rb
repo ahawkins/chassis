@@ -11,7 +11,7 @@ require 'harness'
 require 'harness/rack'
 
 require 'virtus'
-require 'virtus/dirty'
+require 'virtus/dirty_attribute'
 
 require 'prox'
 
@@ -30,6 +30,11 @@ module Chassis
     end
   end
 end
+
+require_relative 'chassis/core_ext/string'
+require_relative 'chassis/core_ext/hash'
+
+require_relative 'chassis/inflector'
 
 require_relative 'chassis/logger'
 
