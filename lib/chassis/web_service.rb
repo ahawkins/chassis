@@ -49,6 +49,7 @@ module Chassis
       halt_json_error 404
     end
 
+    use Rack::Bouncer
     use ::Rack::BounceFavicon
     use ::Rack::Deflater
     use ::Rack::PostBodyContentTypeParser
