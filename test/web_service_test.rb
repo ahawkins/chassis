@@ -5,6 +5,10 @@ class WebServiceTest < MiniTest::Unit::TestCase
 
   attr_reader :app
 
+  def setup
+    @app = Chassis::WebService
+  end
+
   def test_form_errors_return_400
     @app = Class.new Chassis::WebService do
       get '/' do
@@ -48,24 +52,23 @@ class WebServiceTest < MiniTest::Unit::TestCase
   end
 
   def test_parses_json_requests
-    @app = Class.new Chassis::WebService do
-      post '/' do
-        params.fetch('json').fetch('key')
-      end
-    end
-
-    post '/', JSON.dump(json: { key: 'value' }), 'CONTENT_TYPE' => 'application/json'
-
-    assert_equal 'value', last_response.body
+    assert_middleware app.middleware, Rack::PostBodyContentTypeParser
   end
 
   def test_blocks_robots
-    @app = Class.new Chassis::WebService
+    assert_middleware app.middleware, Chassis::Rack::NoRobots
+  end
 
-    get '/robots.txt'
+  def test_bounces_bad_requests
+    assert_middleware app.middleware, Chassis::Rack::Bouncer
+  end
 
-    assert_equal 200, last_response.status
-    assert_includes last_response.body, "Disallow: /"
+  def test_blocks_noob_favicon
+    assert_middleware app.middleware, Rack::BounceFavicon
+  end
+
+  def test_uses_gzip
+    assert_middleware app.middleware, Rack::Deflater
   end
 
   private
@@ -76,5 +79,10 @@ class WebServiceTest < MiniTest::Unit::TestCase
   def assert_error_message(response)
     json = JSON.load(response.body)
     assert json.fetch('error').fetch('message')
+  end
+
+  def assert_middleware(stack, klass)
+    klasses = stack.map { |m| m.first }
+    assert_includes klasses, klass, "#{klass} should be in the middleware stack"
   end
 end
