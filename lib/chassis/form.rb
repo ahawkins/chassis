@@ -1,6 +1,16 @@
 module Chassis
   class Form
-    class UnknownField < StandardError ; end
+    class UnknownFieldError < StandardError
+      attr_reader :attribute
+
+      def initialize(attribute)
+        @attribute = attribute
+      end
+
+      def to_s
+        "#{attribute} given but not allowed."
+      end
+    end
 
     include Virtus.model
     include Virtus::DirtyAttribute
@@ -31,7 +41,7 @@ module Chassis
       return if accepted_keys.empty?
 
       hash.keys.each do |key|
-        raise UnknownField, key unless accepted_keys.include? key
+        raise UnknownFieldError, key unless accepted_keys.include? key
       end
     end
 

@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "sinatra"
+  spec.add_dependency "sinatra-contrib"
   spec.add_dependency "rack-contrib"
   spec.add_dependency "manifold"
   spec.add_dependency "prox"

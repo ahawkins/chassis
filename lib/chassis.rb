@@ -54,5 +54,7 @@ require_relative 'chassis/rack/health_check'
 require_relative 'chassis/rack/instrumentation'
 require_relative 'chassis/rack/no_robots'
 
+require_relative 'chassis/web_service'
+
 Chassis::Repo.backend = Chassis::Repo::InMemoryAdapter.new
 Chassis::Repo.backend.initialize_storage!

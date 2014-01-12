@@ -20,7 +20,7 @@ class FormTest < MiniTest::Unit::TestCase
   end
 
   def test_assigning_an_known_attributes_raises_an_error
-    assert_raises Chassis::Form::UnknownField do
+    assert_raises Chassis::Form::UnknownFieldError do
       Form.new foo: 'bar'
     end
   end
