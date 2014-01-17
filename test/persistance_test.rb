@@ -16,7 +16,7 @@ class PersistanceTest < MiniTest::Unit::TestCase
   end
 
   def test_models_can_be_initialize_with_a_hash
-    assert_includes Model.ancestors, Chassis::HashInitializer
+    assert_includes Model.ancestors, Chassis::Initializable
   end
 
   def test_class_has_a_create_factory

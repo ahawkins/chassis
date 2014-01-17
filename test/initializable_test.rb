@@ -1,8 +1,8 @@
 require_relative 'test_helper'
 
-class HashInitializerTest < MiniTest::Unit::TestCase
+class InitializableTest < MiniTest::Unit::TestCase
   class Person
-    include Chassis::HashInitializer
+    include Chassis::Initializable
 
     attr_accessor :nick
   end

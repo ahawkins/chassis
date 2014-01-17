@@ -15,7 +15,7 @@ module Chassis
     class << self
       def included(base)
         base.class_eval do
-          include HashInitializer
+          include Initializable
           include Equalizer.new(:id)
 
           attr_accessor :id
