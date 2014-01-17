@@ -48,7 +48,7 @@ module Chassis
         end
       end
 
-      def initialize(redis = Redis.new)
+      def initialize(redis)
         @redis = redis
       end
 
