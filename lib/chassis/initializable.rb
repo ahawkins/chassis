@@ -1,5 +1,5 @@
 module Chassis
-  module HashInitializer
+  module Initializable
     def initialize(values = {})
       super()
       values.each_pair do |key, value|

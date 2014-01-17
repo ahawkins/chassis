@@ -43,7 +43,9 @@ require_relative 'chassis/faraday'
 require_relative 'chassis/form'
 require_relative 'chassis/repo'
 
-require_relative 'chassis/hash_initializer'
+require_relative 'chassis/persistance'
+
+require_relative 'chassis/initializable'
 
 require_relative 'chassis/dirty_tracking'
 require_relative 'chassis/observable'
