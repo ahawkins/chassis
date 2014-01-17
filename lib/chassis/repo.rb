@@ -111,5 +111,6 @@ module Chassis
 end
 
 require_relative 'repo/in_memory_adapter'
+require_relative 'repo/redis_adapter'
 require_relative 'repo/null_adapter'
 require_relative 'repo/delegation'

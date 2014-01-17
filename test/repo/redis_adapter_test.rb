@@ -1,8 +1,8 @@
 require_relative '../test_helper'
 require_relative 'adapter_tests'
 
-class InMemoryAdapterTest < MiniTest::Unit::TestCase
-  class TestAdapter < Chassis::Repo::InMemoryAdapter
+class RedisAdapterTest < MiniTest::Unit::TestCase
+  class TestAdapter < Chassis::Repo::RedisAdapter
     def query_person_named(klass, selector)
       all(klass).find do |person|
         person.name == selector.name
