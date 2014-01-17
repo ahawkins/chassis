@@ -15,6 +15,7 @@ module Chassis
     class << self
       def included(base)
         base.class_eval do
+          include Equalizer.new(:id)
           attr_accessor :id
         end
 
@@ -34,28 +35,8 @@ module Chassis
       id.nil?
     end
 
-    def ==(o)
-      if o.instance_of? self.class
-        o && o.id == id
-      else
-        false
-      end
-    end
-
-    def eql?(o)
-      self == o
-    end
-
-    def hash
-      id
-    end
-
     def repo
       self.class.repo
-    end
-
-    def inspect
-      "<#{self.class.name}:#{id}>"
     end
   end
 end
