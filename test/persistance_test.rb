@@ -16,15 +16,7 @@ class PersistanceTest < MiniTest::Unit::TestCase
   end
 
   def test_models_can_be_initialize_with_a_hash
-    model = Model.new id: 5
-    assert_equal 5, model.id
-  end
-
-  def test_models_can_be_initialized_with_a_block
-    model = Model.new do |model|
-      model.id = 5
-    end
-    assert_equal 5, model.id
+    assert_includes Model.ancestors, Chassis::HashInitializer
   end
 
   def test_class_has_a_create_factory
