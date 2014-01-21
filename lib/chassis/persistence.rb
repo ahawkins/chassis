@@ -1,5 +1,5 @@
 module Chassis
-  module Persistance
+  module Persistence
     module ClassMethods
       def create(*args, &block)
         record = new(*args, &block)

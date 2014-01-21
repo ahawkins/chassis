@@ -1,12 +1,12 @@
 require_relative "test_helper"
 
-class PersistanceTest < MiniTest::Unit::TestCase
+class PersistenceTest < MiniTest::Unit::TestCase
   class FakeRepo
 
   end
 
   class Model
-    include Chassis::Persistance
+    include Chassis::Persistence
 
     class << self
       def repo

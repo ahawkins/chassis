@@ -43,7 +43,7 @@ require_relative 'chassis/faraday'
 require_relative 'chassis/form'
 require_relative 'chassis/repo'
 
-require_relative 'chassis/persistance'
+require_relative 'chassis/persistence'
 
 require_relative 'chassis/initializable'
 
