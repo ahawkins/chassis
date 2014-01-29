@@ -98,4 +98,15 @@ class PersistenceTest < MiniTest::Unit::TestCase
     assert_includes array, m3
     refute_includes array, m2
   end
+
+  def test_save_takes_a_block_of_changes
+    FakeRepo.expects(:save)
+
+    model = Model.new id: 5
+    model.save do |m|
+      m.id = 6
+    end
+
+    assert_equal 6, model.id
+  end
 end

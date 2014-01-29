@@ -26,6 +26,7 @@ module Chassis
     end
 
     def save
+      yield self if block_given?
       repo.save self
     end
 
