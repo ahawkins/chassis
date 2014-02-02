@@ -42,6 +42,16 @@ class DirtySessionTest < MiniTest::Unit::TestCase
     assert session.name_changed?
   end
 
+  def test_changes_include_all_new_assignments
+    session = Chassis::DirtySession.new person
+    session.name = 'foo'
+
+    refute session.clean?
+    assert session.dirty?
+
+    assert_equal(Set.new([:name]), session.changes)
+  end
+
   def test_changes_are_accessible
     session = Chassis::DirtySession.new person
     session.name = 'foo'

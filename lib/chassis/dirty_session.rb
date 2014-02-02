@@ -1,3 +1,5 @@
+require 'set'
+
 module Chassis
   class DirtySession < Proxy
     def initialize(*args)
@@ -20,6 +22,10 @@ module Chassis
 
     def new_values
       @new_values
+    end
+
+    def changes
+      Set.new original_values.keys
     end
 
     def method_missing(name, *args, &block)
