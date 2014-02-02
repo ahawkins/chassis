@@ -28,6 +28,11 @@ module Chassis
       Set.new original_values.keys
     end
 
+    def reset!
+      original_values.clear
+      new_values.clear
+    end
+
     def method_missing(name, *args, &block)
       raise MissingObject, name unless __getobj__
 

@@ -113,4 +113,26 @@ class DirtySessionTest < MiniTest::Unit::TestCase
 
     assert_equal original_name, session.original_name
   end
+
+  def test_reset_moves_session_to_initial_state
+    original_name = person.name
+    assert original_name, "Precondition: person must have a name"
+
+    session = Chassis::DirtySession.new person
+    session.name = 'matthew'
+
+    refute session.clean?
+    assert session.dirty?
+
+    session.reset!
+
+    assert session.clean?
+    refute session.dirty?
+
+    assert_empty session.changes
+    assert_empty session.new_values
+    assert_empty session.original_values
+
+    refute session.name_changed?
+  end
 end
