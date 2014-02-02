@@ -88,4 +88,15 @@ class DirtySessionTest < MiniTest::Unit::TestCase
     assert_respond_to session, :original_name, "Session should respond to original_XXX methods"
     assert_equal original_name, session.original_name
   end
+
+  def test_assigning_the_same_value_does_not_count_as_a_change
+    original_name = person.name
+    assert original_name, "Precondition: person must have a name"
+
+    session = Chassis::DirtySession.new person
+    session.name = original_name
+
+    assert session.clean?, "Setting the same value should not count as a change"
+    refute session.dirty?
+  end
 end
