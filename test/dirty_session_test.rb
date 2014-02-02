@@ -38,6 +38,7 @@ class DirtySessionTest < MiniTest::Unit::TestCase
     refute session.clean?
     assert session.dirty?
 
+    assert_respond_to session, :name_changed?, "Session should respond to changed queries"
     assert session.name_changed?
   end
 
@@ -74,6 +75,7 @@ class DirtySessionTest < MiniTest::Unit::TestCase
     refute session.clean?
     assert session.dirty?
 
+    assert_respond_to session, :original_name, "Session should respond to original_XXX methods"
     assert_equal original_name, session.original_name
   end
 end

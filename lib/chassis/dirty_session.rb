@@ -36,6 +36,14 @@ module Chassis
       end
     end
 
+    def respond_to_missing?(name, include_private = false)
+      if changed_method?(name) || original_method?(name)
+        __getobj__.respond_to? reader_method(name)
+      else
+        super
+      end
+    end
+
     private
     def handle_writer_method(name, *args, &block)
       original_value = __getobj__.send reader_method(name)
