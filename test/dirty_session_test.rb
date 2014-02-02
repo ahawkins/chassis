@@ -99,4 +99,18 @@ class DirtySessionTest < MiniTest::Unit::TestCase
     assert session.clean?, "Setting the same value should not count as a change"
     refute session.dirty?
   end
+
+  def test_assigning_the_same_value_multiple_times_saves_the_initial_value
+    original_name = person.name
+    assert original_name, "Precondition: person must have a name"
+
+    session = Chassis::DirtySession.new person
+    session.name = 'matthew'
+    session.name = 'michael'
+
+    refute session.clean?
+    assert session.dirty?
+
+    assert_equal original_name, session.original_name
+  end
 end

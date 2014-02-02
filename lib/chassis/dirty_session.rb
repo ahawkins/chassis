@@ -52,12 +52,14 @@ module Chassis
 
     private
     def handle_writer_method(name, *args, &block)
-      original_value = __getobj__.send reader_method(name)
+      method_key = reader_method name
+
+      original_value = __getobj__.send method_key
       new_value = __getobj__.send name, *args, &block
 
       if new_value != original_value
-        original_values[reader_method(name)] = original_value
-        new_values[reader_method(name)] = new_value
+        original_values[method_key] = original_value unless original_values.key? method_key
+        new_values[method_key] = new_value
       end
 
       new_value
