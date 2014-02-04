@@ -17,9 +17,9 @@ require 'prox'
 
 require 'faraday'
 
-Proxy = Prox
-
 module Chassis
+  Proxy = Prox
+
   class << self
     def stream
       @stream
