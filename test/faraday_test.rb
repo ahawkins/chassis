@@ -55,18 +55,18 @@ class FaradayTest < MiniTest::Unit::TestCase
   def test_sends_requests_in_json
     faraday = build do |conn|
       conn.request :encode_json
-      conn.response :parse_json
 
       conn.adapter :test do |stub|
-        stub.get 'test' do
-          [200, {'Content-Type' => 'application/json'}, JSON.dump(foo: 'bar')]
+        stub.post 'test' do |env|
+          json = JSON.load env.fetch(:body)
+          [200, {'Content-Type' => 'text/plain'}, json.fetch('foo')]
         end
       end
     end
 
-    response = faraday.get 'test'
+    response = faraday.post 'test', foo: 'bar'
 
-    assert_equal({ 'foo' => 'bar' }, response.body)
+    assert_equal 'bar', response.body
   end
 
   def test_parses_json_bodies

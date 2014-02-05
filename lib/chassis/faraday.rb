@@ -122,7 +122,7 @@ module Chassis
       return unless content_type
       return unless content_type =~ /json/
 
-      body = env.fetch :body
+      body = env.body
 
       return unless body.respond_to? :to_str
 
@@ -154,9 +154,9 @@ module Chassis
     end
 
     def call(env)
-      if env[:body]
+      if env.body
         env[:request_headers]['Content-Type'] = 'application/json'
-        env[:body] = JSON.dump(env.fetch(:body))
+        env.body = JSON.dump env.body
       end
 
       @app.call env
@@ -184,7 +184,7 @@ module Chassis
         "> #{name}: #{value}"
       end.join("\n")
 
-      @logger.debug [request_line, headers, env.fetch(:body)].compact.join("\n")
+      @logger.debug [request_line, headers, env.body].compact.join("\n")
     end
 
     def dump_response(env)
@@ -195,7 +195,7 @@ module Chassis
         "> #{name}: #{value}"
       end.join("\n")
 
-      @logger.debug [request_line, headers, env.fetch(:body)].compact.join("\n")
+      @logger.debug [request_line, headers, env.body].compact.join("\n")
     end
   end
 
