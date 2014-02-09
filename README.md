@@ -142,6 +142,7 @@ Farday.new 'http://foo.com', do |builder|
   # requests will raise a useful error with the response body
   # and status code. This is much more useful than the bundled
   # implementation. A 403 response will raise a HttpForbiddenError.
+  # This middleware also captures timeouts.
   # Useful for catching failure conditions.
   faraday.request :server_error_handler
 
@@ -162,6 +163,14 @@ Chassis.faraday 'http://foo.com' do |builder|
   # your stuff here
 end
 ```
+
+## Circuit Breakers with Breaker
+
+[Breaker](https://github.com/ahawkins/breaker) provides the low level
+implementation. `Chassis::CircuitPanel` is a class for unifiying
+access to all the different circuits in the application. This is
+useful because other parts of the code don't need to know about how
+the circuit is implemented.
 
 ## Chassis::DirtySession
 

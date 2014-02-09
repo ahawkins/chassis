@@ -17,6 +17,8 @@ require 'prox'
 
 require 'faraday'
 
+require 'breaker'
+
 module Chassis
   Proxy = Prox
 
