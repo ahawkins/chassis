@@ -53,6 +53,8 @@ require_relative 'chassis/observable'
 
 require_relative 'chassis/dirty_session'
 
+require_relative 'chassis/circuit_panel'
+
 require_relative 'chassis/rack/bouncer'
 require_relative 'chassis/rack/builder_shim_patch'
 require_relative 'chassis/rack/health_check'
