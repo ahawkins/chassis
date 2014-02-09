@@ -170,7 +170,41 @@ end
 implementation. `Chassis::CircuitPanel` is a class for unifiying
 access to all the different circuits in the application. This is
 useful because other parts of the code don't need to know about how
-the circuit is implemented.
+the circuit is implemented. `Chassis.circuit_panel` behaves like
+`Struct.new`. It returns a new class.
+
+```ruby
+CircuitPanel = Chassis.circuit_panel do
+  circuit :test, timeout: 10, retry_threshold: 6
+end
+
+panel = CircuitPanel.new
+
+circuit = panel.test
+circuit.class # => Breaker::Circuit
+
+circuit.run do
+  # do your stuff here
+end
+```
+
+Since `Chassis.circuit_panel` returns a class, you can do anything you
+want. Don't like to have to instantiate a new instance everytime? Use
+a singleton and assign that to a constant.
+
+```ruby
+require 'singleton'
+
+CircuitPanel = Chassis.circuit_panel do
+  include Singleton
+
+  circuit :test, timeout: 10, retry_threshold: 6
+end.instance
+
+CircuitPanel.test.run do 
+  # your stuff here
+end
+```
 
 ## Chassis::DirtySession
 
