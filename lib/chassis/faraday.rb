@@ -205,4 +205,22 @@ module Chassis
   ::Faraday::Response.register_middleware parse_json: ParseJson
   ::Faraday::Response.register_middleware server_error_handler: ServerErrorHandler
   ::Faraday::Response.register_middleware logging: Logging
+
+  class << self
+    def faraday(host, options = {})
+      namespace = options.delete :namespace
+      logger = options.delete(:logger) || Logger.new.tap { |l| l.progname = 'faraday' }
+
+      Faraday.new host, options do |conn|
+        conn.request :instrumentation, namespace
+        conn.request :encode_json
+
+        conn.response :parse_json
+        conn.response :server_error_handler
+        conn.response :logging, logger
+
+        yield conn if block_given?
+      end
+    end
+  end
 end

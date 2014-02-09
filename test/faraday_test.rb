@@ -693,4 +693,57 @@ class FaradayTest < MiniTest::Unit::TestCase
     msg = exception.to_s
     assert_includes msg, "http://example.com/test.error"
   end
+
+  def test_has_factory_for_faraday_connections
+    faraday = Chassis.faraday 'http://example.com'
+
+    stack = faraday.builder.handlers
+
+    assert_includes stack, Chassis::Instrumentation
+    assert_includes stack, Chassis::EncodeJson
+    assert_includes stack, Chassis::ParseJson
+    assert_includes stack, Chassis::ServerErrorHandler
+    assert_includes stack, Chassis::Logging
+  end
+
+  def test_factory_can_change_the_namespace
+    faraday = Chassis.faraday 'http://example.com', namespace: 'test' do |conn|
+      conn.adapter :test do |stub|
+        stub.get 'test' do
+          [200, {'Content-Type' => 'application/json'}, JSON.dump(foo: 'bar')]
+        end
+      end
+    end
+
+    faraday.get 'test'
+
+    refute_empty stats.timers
+    timer = stats.timers.first
+
+    assert_equal 'test', timer.name
+  end
+
+  def test_factory_can_change_the_logger
+    stream = StringIO.new
+    logger = Logger.new stream
+    logger.level = :debug
+
+    faraday = Chassis.faraday 'http://example.com', logger: logger do |conn|
+      conn.adapter :test do |stub|
+        stub.get 'test' do
+          [200, {}, 'dead']
+        end
+      end
+    end
+
+    faraday.get 'test', { foo: 'bar' }, { 'This-Header' => 'has_a_value' }
+
+    stream.rewind ; content = stream.read
+
+    assert_includes content, 'http://example.com/test'
+    assert_includes content, 'This-Header'
+    assert_includes content, 'has_a_value'
+    assert_includes content, 'foo'
+    assert_includes content, 'bar'
+  end
 end
