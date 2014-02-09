@@ -142,7 +142,7 @@ module Chassis
     end
 
     def call(env)
-      time @progname do
+      time "#{@progname}.#{env.method}" do
         @app.call env
       end
     end

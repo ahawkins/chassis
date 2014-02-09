@@ -30,7 +30,7 @@ class FaradayTest < MiniTest::Unit::TestCase
     refute_empty stats.timers
     timer = stats.timers.first
 
-    assert_equal 'faraday', timer.name
+    assert_equal 'faraday.get', timer.name
   end
 
   def test_instrumentation_namespace_can_be_customized
@@ -49,7 +49,7 @@ class FaradayTest < MiniTest::Unit::TestCase
     refute_empty stats.timers
     timer = stats.timers.first
 
-    assert_equal 'http', timer.name
+    assert_equal 'http.get', timer.name
   end
 
   def test_sends_requests_in_json
@@ -720,7 +720,7 @@ class FaradayTest < MiniTest::Unit::TestCase
     refute_empty stats.timers
     timer = stats.timers.first
 
-    assert_equal 'test', timer.name
+    assert_equal 'test.get', timer.name
   end
 
   def test_factory_can_change_the_logger
