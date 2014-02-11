@@ -1,7 +1,9 @@
 require_relative 'test_helper'
 
 class FormTest < MiniTest::Unit::TestCase
-  class Form < Chassis::Form
+  class Form
+    include Chassis.form
+
     attribute :name, String
     attribute :email, String
   end
