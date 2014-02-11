@@ -42,16 +42,19 @@ module Chassis
       end
 
       private
+      # FIXME: There should be a cleaner way to do this. This module
+      # should use the register/use methods instead of hacking into
+      # the private implementation
       def implementations
-        @implementations ||= { null: null_implementation }
+        @implementations ||= { null: null_implementation}
       end
 
       def implementation
-        @implementation ||= null_implementation
+        @implementation || null_implementation
       end
 
       def null_implementation
-        @null_implementation ||= NullImplementation.new
+        NullImplementation.new
       end
     end
 
@@ -61,9 +64,6 @@ module Chassis
       end
 
       define_delegate_method :up?
-
-      # register :null, NullImplementation.new
-      # use :null
 
       methods.each do |method|
         define_delegate_method method

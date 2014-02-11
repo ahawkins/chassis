@@ -94,4 +94,12 @@ class ServiceTest < MiniTest::Unit::TestCase
     assert_equal :foo, service.foo
     assert_equal :bar, service.bar
   end
+
+  def test_null_implementation_works_with_extend
+    service = build do
+      extend Chassis.service(:add)
+    end
+
+    assert_equal [1,2], service.add(1,2)
+  end
 end
