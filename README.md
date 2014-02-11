@@ -119,6 +119,14 @@ set an unknown attributes will raise
 `Chassis::WebService` registers an error handler and returns a `400
 Bad Request` in this case.
 
+Create a new form by including `Chassis.form`
+
+```ruby
+class SignupForm
+  include Chassis.form
+end
+```
+
 ## Outgoing HTTP with Faraday
 
 Chassis uses Faraday becuase it's the best god damn HTTP client in
