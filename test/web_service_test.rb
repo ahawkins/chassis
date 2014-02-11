@@ -12,7 +12,7 @@ class WebServiceTest < MiniTest::Unit::TestCase
   def test_form_errors_return_400
     @app = Class.new Chassis::WebService do
       get '/' do
-        raise Chassis::Form::UnknownFieldError, :test
+        raise Chassis::UnknownFormFieldError, :test
       end
     end
 
@@ -26,7 +26,7 @@ class WebServiceTest < MiniTest::Unit::TestCase
   def test_repo_record_not_found_returns_404
     @app = Class.new Chassis::WebService do
       get '/' do
-        raise Chassis::Repo::RecordNotFoundError.new(Object, 'some-id')
+        raise Chassis::RecordNotFoundError.new(Object, 'some-id')
       end
     end
 

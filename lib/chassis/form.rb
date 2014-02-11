@@ -1,15 +1,7 @@
 module Chassis
-  class Form
-    class UnknownFieldError < StandardError
-      attr_reader :attribute
-
-      def initialize(attribute)
-        @attribute = attribute
-      end
-
-      def to_s
-        "#{attribute} given but not allowed."
-      end
+  class UnknownFormFieldError < StandardError
+    def initialize(field)
+      super "#{field} given but not allowed."
     end
   end
 
@@ -30,7 +22,7 @@ module Chassis
         return if accepted_keys.empty?
 
         hash.keys.each do |key|
-          raise ::Chassis::Form::UnknownFieldError, key unless accepted_keys.include? key
+          raise UnknownFormFieldError, key unless accepted_keys.include? key
         end
       end
 

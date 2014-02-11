@@ -1,36 +1,37 @@
 require 'singleton'
 
 module Chassis
+  class RecordNotFoundError < StandardError
+    def initialize(klass, id)
+      @klass, @id = klass, id
+    end
+
+    def to_s
+      "Could not locate #{@klass} with id #{@id}"
+    end
+  end
+
+  class QueryNotImplementedError < StandardError
+    def initialize(selector)
+      @selector = selector
+    end
+
+    def to_s
+      "Adapter does not support #{@selector.class}!"
+    end
+  end
+
+  class GraphQueryNotImplementedError < StandardError
+    def initialize(selector)
+      @selector = selector
+    end
+
+    def to_s
+      "Adapter does not know how to graph #{@selector.class}!"
+    end
+  end
+
   class Repo
-    class RecordNotFoundError < StandardError
-      def initialize(klass, id)
-        @klass, @id = klass, id
-      end
-
-      def to_s
-        "Could not locate #{@klass} with id #{@id}"
-      end
-    end
-
-    class QueryNotImplementedError < StandardError
-      def initialize(selector)
-        @selector = selector
-      end
-
-      def to_s
-        "Adapter does not support #{@selector.class}!"
-      end
-    end
-    class GraphQueryNotImplementedError < StandardError
-      def initialize(selector)
-        @selector = selector
-      end
-
-      def to_s
-        "Adapter does not know how to graph #{@selector.class}!"
-      end
-    end
-
     include Singleton
 
     attr_reader :backend

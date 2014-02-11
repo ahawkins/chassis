@@ -41,11 +41,11 @@ module Chassis
       halt_json_error 400
     end
 
-    error Chassis::Form::UnknownFieldError do
+    error Chassis::UnknownFormFieldError do
       halt_json_error 400
     end
 
-    error Chassis::Repo::RecordNotFoundError do
+    error Chassis::RecordNotFoundError do
       halt_json_error 404
     end
 
