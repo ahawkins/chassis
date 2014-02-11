@@ -1,14 +1,10 @@
 module Chassis
-  class UnregisteredImplementationError < StandardError
-    def initialize(name)
-      super "#{name} is not a registered implementation"
-    end
+  UnregisteredImplementationError = Chassis.error do |name|
+    "#{name} is not a registered implementation"
   end
 
-  class ImplementationMissingError < StandardError
-    def initialize(object, method)
-      super "The #{object.class} does not respond to #{method}"
-    end
+  ImplementationMissingError = Chassis.error do |object, method|
+    "The #{object.class} does not respond to #{method}"
   end
 
   class Service < Module

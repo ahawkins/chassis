@@ -1,8 +1,6 @@
 module Chassis
-  class UnknownFormFieldError < StandardError
-    def initialize(field)
-      super "#{field} given but not allowed."
-    end
+  UnknownFormFieldError = Chassis.error do |field|
+     "#{field} given but not allowed."
   end
 
   class FormModule < Module
