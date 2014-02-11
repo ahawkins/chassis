@@ -5,7 +5,7 @@ module Chassis
     end
   end
 
-  class NotImplementedError < StandardError
+  class ImplementationMissingError < StandardError
     def initialize(object, method)
       super "The #{object.class} does not respond to #{method}"
     end
@@ -26,36 +26,55 @@ module Chassis
       end
     end
 
-    def initialize(*methods)
-      methods.each do |method|
-        define__method method do |*args, &block|
-          raise NotImplementedError.new(implementation, method) unless implementation.respond_to? method
-          implementation.send method, *args, &block
+    module Methods
+      def register(name, implementation)
+        implementations[name] = implementation
+      end
+
+      def use(name)
+        @implementation = implementations.fetch name do
+          raise UnregisteredImplementationError, name
         end
       end
-    end
 
-    def register(name, implementation)
-      implementations[name] = implementation
-    end
+      def down?
+        !up?
+      end
 
-    def use(name)
-      @implementation = implementations.fetch name do
-        raise UnregisteredImplementationError, name
+      private
+      def implementations
+        @implementations ||= { null: null_implementation }
+      end
+
+      def implementation
+        @implementation ||= null_implementation
+      end
+
+      def null_implementation
+        @null_implementation ||= NullImplementation.new
       end
     end
 
-    def down?
-      !up?
+    def initialize(*methods)
+      module_eval do
+        include Methods
+      end
+
+      define_delegate_method :up?
+
+      # register :null, NullImplementation.new
+      # use :null
+
+      methods.each do |method|
+        define_delegate_method method
+      end
     end
 
-    private
-    def implementations
-      @implementations ||= {}
-    end
-
-    def implementation
-      @implementation
+    def define_delegate_method(method)
+      define_method method do |*args, &block|
+        raise ImplementationMissingError.new(implementation, method) unless implementation.respond_to? method
+        implementation.send method, *args, &block
+      end
     end
   end
 
