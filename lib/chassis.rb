@@ -36,6 +36,8 @@ end
 require_relative 'chassis/core_ext/string'
 require_relative 'chassis/core_ext/hash'
 
+require_relative 'chassis/error'
+
 require_relative 'chassis/inflector'
 
 require_relative 'chassis/logger'
