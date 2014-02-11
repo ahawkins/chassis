@@ -41,21 +41,30 @@ module Chassis
         !up?
       end
 
-      private
-      # FIXME: There should be a cleaner way to do this. This module
-      # should use the register/use methods instead of hacking into
-      # the private implementation
       def implementations
-        @implementations ||= { null: null_implementation}
+        @implementations ||= { }
       end
 
       def implementation
-        @implementation || null_implementation
+        @implementation
       end
+    end
 
-      def null_implementation
-        NullImplementation.new
+    module NullImplementationForInstances
+      def initialize(*args)
+        super
+        register :null, NullImplementation.new
+        use :null
       end
+    end
+
+    def included(base)
+      base.include NullImplementationForInstances
+    end
+
+    def extended(klass)
+      klass.register :null, NullImplementation.new
+      klass.use :null
     end
 
     def initialize(*methods)
