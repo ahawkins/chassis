@@ -62,7 +62,7 @@ other customizations.
   time for that
 * uses `Chassis::Rack::Bouncer`
 * uses `Chassis::Rack::NoRobots`
-* uses `Rack::Delfator` to gzip everything
+* uses `Rack::Deflator` to gzip everything
 * uses `Rack::PostBodyContentTypeParser` to parse incoming JSON bodies
 * `enable :cors` to enable CORS with manifold.
 * registers error handlers for unknown exceptions coming from other
