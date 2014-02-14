@@ -9,6 +9,10 @@ class RepoDelegationTest < MiniTest::Unit::TestCase
     end
   end
 
+  class SomethingSomething
+    extend Chassis::Repo::Delegation
+  end
+
   Person = Struct.new :name
 
   attr_reader :target, :person
@@ -21,6 +25,12 @@ class RepoDelegationTest < MiniTest::Unit::TestCase
     @target = mock
     @person = Person.new 'ahawkins'
     Chassis::Repo.stubs(:instance).returns(target)
+  end
+
+  def test_classes_that_dont_match_on_name_fail_with_a_helpful_error
+    assert_raises Chassis::UnknownObjectClassError do
+      SomethingSomething.object_class
+    end
   end
 
   def test_find_delegates_to_the_target

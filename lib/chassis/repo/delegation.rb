@@ -1,4 +1,8 @@
 module Chassis
+  UnknownObjectClassError = Chassis.error do
+    "Rename class to end in Repo or define object_class"
+  end
+
   class Repo
     module Delegation
       def all
@@ -50,7 +54,12 @@ module Chassis
       end
 
       def object_class
-        @object_class ||= self.to_s.match(/^(.+)Repo/)[1].constantize
+        @object_class ||= begin
+          fail UnknownObjectClassError unless name
+          match = name.match(/^(.+)Repo$/)
+          fail UnknownObjectClassError unless match
+          match[1].constantize
+        end
       end
 
       def backend
