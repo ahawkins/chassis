@@ -59,6 +59,7 @@ module Chassis
   end
 end
 
+require_relative 'repo/base_implementation'
 require_relative 'repo/memory_implementation'
 require_relative 'repo/redis_implementation'
 require_relative 'repo/null_implementation'
