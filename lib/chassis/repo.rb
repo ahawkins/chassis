@@ -13,6 +13,10 @@ module Chassis
     "Adapter does not know how to graph #{selector.class}!"
   end
 
+  NoQueryResultError = Chassis.error do |selector|
+    "Query #{selector.class} must return results!"
+  end
+
   class Repo
     include Singleton
     include Chassis.strategy(*[
@@ -32,6 +36,12 @@ module Chassis
       else
         create record
       end
+    end
+
+    def query!(klass, selector)
+      result = query klass, selector
+      fail NoQueryResultError, selector if result.nil? || result.empty?
+      result
     end
   end
 
