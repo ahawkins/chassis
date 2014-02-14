@@ -1,6 +1,6 @@
 module Chassis
   class Repo
-    class InMemoryAdapter
+    class MemoryImplementation
       def initialize
         @counter = 0
         @map = {}

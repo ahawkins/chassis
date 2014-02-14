@@ -1,6 +1,6 @@
 module Chassis
   class Repo
-    class NullAdapter
+    class NullImplementation
       def initialize
         @counter = 0
       end

@@ -59,7 +59,7 @@ module Chassis
   end
 end
 
-require_relative 'repo/in_memory_adapter'
-require_relative 'repo/redis_adapter'
-require_relative 'repo/null_adapter'
+require_relative 'repo/memory_implementation'
+require_relative 'repo/redis_implementation'
+require_relative 'repo/null_implementation'
 require_relative 'repo/delegation'

@@ -1,7 +1,7 @@
 require_relative 'test_helper'
 
 class RepoTest < MiniTest::Unit::TestCase
-  class TestAdapter < Chassis::Repo::InMemoryAdapter
+  class TestAdapter < Chassis::Repo::MemoryImplementation
     def query_test_empty_array_query(klass, q)
       [ ]
     end

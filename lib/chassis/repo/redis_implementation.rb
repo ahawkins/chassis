@@ -1,6 +1,6 @@
 module Chassis
   class Repo
-    class RedisAdapter < InMemoryAdapter
+    class RedisImplementation < MemoryImplementation
       class RedisMapper
         attr_reader :klass, :redis
 

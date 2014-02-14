@@ -1,8 +1,8 @@
 require_relative '../test_helper'
-require_relative 'adapter_tests'
+require_relative 'implementation_tests'
 
-class RedisAdapterTest < MiniTest::Unit::TestCase
-  class TestAdapter < Chassis::Repo::RedisAdapter
+class RedisImplementationTest < MiniTest::Unit::TestCase
+  class TestImplementation < Chassis::Repo::RedisImplementation
     def query_person_named(klass, selector)
       all(klass).find do |person|
         person.name == selector.name
@@ -16,10 +16,10 @@ class RedisAdapterTest < MiniTest::Unit::TestCase
     end
   end
 
-  attr_reader :adapter
+  attr_reader :implementation
 
   def setup
-    @adapter = TestAdapter.new
+    @implementation = TestImplementation.new
     super
   end
 end
