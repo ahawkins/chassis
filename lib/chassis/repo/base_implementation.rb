@@ -21,14 +21,6 @@ module Chassis
         all(klass).count
       end
 
-      # def find(klass, id)
-      #   result = all(klass).find do |record|
-      #     record.id == id
-      #   end
-      #   fail RecordNotFoundError.new(klass, id) unless result
-      #   result
-      # end
-
       def query(klass, selector)
         if query_implemented? klass, selector
           send query_method(klass, selector), klass, selector
