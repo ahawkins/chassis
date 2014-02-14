@@ -16,6 +16,8 @@ class InMemoryImplementationTest < MiniTest::Unit::TestCase
     end
   end
 
+  include ImplementationTests
+
   attr_reader :implementation
 
   def setup

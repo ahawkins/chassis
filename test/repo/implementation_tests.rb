@@ -7,6 +7,8 @@ module ImplementationTests
   PersonFooBarBaz = Class.new
 
   def test_crud_operations
+    assert_equal 0, implementation.count(Person), "Precondition: there should be no records"
+
     person = Person.new 'ahawkins'
     implementation.create person
 
@@ -28,6 +30,8 @@ module ImplementationTests
   end
 
   def test_clear_wipes_all_data
+    assert_equal 0, implementation.count(Person), "Precondition: there should be no records"
+
     person = Person.new 'ahawkins'
     implementation.create person
 
@@ -40,12 +44,16 @@ module ImplementationTests
   end
 
   def test_raises_error_when_no_reecord_exists
+    assert_equal 0, implementation.count(Person)
+
     assert_raises Chassis::RecordNotFoundError do
       implementation.find Person, 1
     end
   end
 
   def test_first_and_last
+    assert_equal 0, implementation.count(Person), "Precondition: there should be no records"
+
     adam = Person.new 'ahawkins'
     peter = Person.new 'pepps'
 
@@ -57,6 +65,8 @@ module ImplementationTests
   end
 
   def test_clear_wipes_data
+    assert_equal 0, implementation.count(Person), "Precondition: there should be no records"
+
     adam = Person.new 'ahawkins'
     implementation.create adam
 
@@ -77,11 +87,15 @@ module ImplementationTests
   end
 
   def test_uses_query_method_to_implement_queries
+    assert_equal 0, implementation.count(Person), "Precondition: there should be no records"
+
     adam = Person.new 'ahawkins'
     peter = Person.new 'pepp'
 
     implementation.create adam
     implementation.create peter
+
+    assert_equal 2, implementation.count(Person)
 
     assert_equal adam, implementation.query(Person, PersonNamed.new('ahawkins'))
   end
@@ -93,6 +107,8 @@ module ImplementationTests
   end
 
   def test_uses_the_specific_graph_query_method_for_graph_query
+    assert_equal 0, implementation.count(Person), "Precondition: there should be no records"
+
     adam = Person.new 'ahawkins'
     peter = Person.new 'pepp'
 
