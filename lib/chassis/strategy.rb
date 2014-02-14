@@ -7,7 +7,7 @@ module Chassis
     "The #{object.class} does not respond to #{method}"
   end
 
-  class Service < Module
+  class Strategy < Module
     class NullImplementation
       def up?
         true
@@ -84,8 +84,8 @@ module Chassis
   end
 
   class << self
-    def service(*methods)
-      Service.new *methods
+    def strategy(*methods)
+      Strategy.new *methods
     end
   end
 end

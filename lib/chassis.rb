@@ -57,7 +57,7 @@ require_relative 'chassis/dirty_session'
 
 require_relative 'chassis/circuit_panel'
 
-require_relative 'chassis/service'
+require_relative 'chassis/strategy'
 
 require_relative 'chassis/rack/bouncer'
 require_relative 'chassis/rack/builder_shim_patch'
