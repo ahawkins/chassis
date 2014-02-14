@@ -45,7 +45,6 @@ require_relative 'chassis/logger'
 require_relative 'chassis/faraday'
 
 require_relative 'chassis/form'
-require_relative 'chassis/repo'
 
 require_relative 'chassis/persistence'
 
@@ -59,6 +58,8 @@ require_relative 'chassis/circuit_panel'
 
 require_relative 'chassis/strategy'
 
+require_relative 'chassis/repo'
+
 require_relative 'chassis/rack/bouncer'
 require_relative 'chassis/rack/builder_shim_patch'
 require_relative 'chassis/rack/health_check'
@@ -67,5 +68,5 @@ require_relative 'chassis/rack/no_robots'
 
 require_relative 'chassis/web_service'
 
-Chassis::Repo.backend = Chassis::Repo::InMemoryAdapter.new
-Chassis::Repo.backend.initialize_storage!
+Chassis::Repo.instance.register :memory, Chassis::Repo::InMemoryAdapter.new
+Chassis::Repo.instance.use :memory

@@ -6,10 +6,6 @@ module AdapterTests
   PersonNamed = Struct.new :name
   PersonFooBarBaz = Class.new
 
-  def setup
-    adapter.initialize_storage!
-  end
-
   def test_crud_operations
     person = Person.new 'ahawkins'
     adapter.create person

@@ -15,80 +15,23 @@ module Chassis
 
   class Repo
     include Singleton
-
-    attr_reader :backend
-
-    def self.backend
-      @backend
-    end
-
-    def self.backend=(backend)
-      @backend = backend
-    end
-
-    def initialize(backend = Repo.backend)
-      @backend = backend
-    end
-
-    def initialize_storage!
-      backend.initialize_storage!
-    end
-
-    def clear
-      backend.clear
-    end
-
-    def count(klass)
-      backend.count klass
-    end
+    include Chassis.strategy(*[
+      :clear, :count, :find, :delete,
+      :first, :last, :query, :graph_query,
+      :sample, :empty?
+    ])
 
     def find(klass, id)
       raise ArgumentError, "id cannot be nil!" if id.nil?
-      backend.find klass, id
+      super
     end
 
     def save(record)
       if record.id
-        backend.update record
+        update record
       else
-        backend.create record
+        create record
       end
-    end
-
-    def delete(record)
-      backend.delete record
-    end
-
-    def first(klass)
-      backend.first klass
-    end
-
-    def last(klass)
-      backend.last klass
-    end
-
-    def all(klass)
-      backend.all klass
-    end
-
-    def query(klass, selector)
-      backend.query klass, selector
-    end
-
-    def graph(klass, id)
-      backend.graph klass, id
-    end
-
-    def graph_query(klass, selector)
-      backend.graph_query klass, selector
-    end
-
-    def sample(klass)
-      backend.sample klass
-    end
-
-    def empty?(klass)
-      backend.empty?(klass)
     end
   end
 end
