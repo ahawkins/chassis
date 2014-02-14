@@ -33,6 +33,15 @@ module Chassis
         end
       end
 
+      def with(name)
+        original = implementation
+        use name
+        result = yield self
+        @implementation = original
+
+        result
+      end
+
       def down?
         !up?
       end

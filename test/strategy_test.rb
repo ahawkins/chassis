@@ -102,4 +102,35 @@ class StrategyTest < MiniTest::Unit::TestCase
 
     assert_equal [1,2], service.add(1,2)
   end
+
+  def test_can_use_one_implementation_temporarily
+    implementation_a = Class.new do
+      def number
+        5
+      end
+    end.new
+
+    implementation_b = Class.new do
+      def number
+        1
+      end
+    end.new
+
+    service = build do
+      include Chassis.strategy(:number)
+    end.new
+
+    service.register :five, implementation_a
+    service.register :one, implementation_b
+    service.use :one
+
+    assert_equal 1, service.number
+
+    number = service.with(:five) do |service|
+      service.number
+    end
+
+    assert_equal 5, number
+    assert_equal 1, service.number
+  end
 end
