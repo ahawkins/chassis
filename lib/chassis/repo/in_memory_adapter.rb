@@ -1,7 +1,7 @@
 module Chassis
   class Repo
     class InMemoryAdapter
-      def initialize_storage!
+      def initialize
         @counter = 0
         @map = {}
       end

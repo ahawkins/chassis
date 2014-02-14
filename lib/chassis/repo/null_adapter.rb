@@ -1,7 +1,7 @@
 module Chassis
   class Repo
     class NullAdapter
-      def initialize_storage!
+      def initialize
         @counter = 0
       end
 

@@ -9,7 +9,6 @@ class NullAdapterTest < MiniTest::Unit::TestCase
 
   def setup
     @adapter = Chassis::Repo::NullAdapter.new
-    @adapter.initialize_storage!
   end
 
   def test_create_sets_the_id
