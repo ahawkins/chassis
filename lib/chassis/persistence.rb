@@ -8,7 +8,11 @@ module Chassis
       end
 
       def repo
-        @repo ||= "#{name}Repo".constantize
+        begin
+          @repo ||= "#{name}Repo".constantize
+        rescue NameError
+          fail "#{name}Repo not defined! Define this method to specify a different repo"
+        end
       end
     end
 
