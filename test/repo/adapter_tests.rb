@@ -40,7 +40,7 @@ module AdapterTests
   end
 
   def test_raises_error_when_no_reecord_exists
-    assert_raises Chassis::Repo::RecordNotFoundError do
+    assert_raises Chassis::RecordNotFoundError do
       adapter.find Person, 1
     end
   end
@@ -71,7 +71,7 @@ module AdapterTests
   end
 
   def test_raises_an_error_when_query_not_implemented
-    assert_raises Chassis::Repo::QueryNotImplementedError do
+    assert_raises Chassis::QueryNotImplementedError do
       adapter.query Person, PersonFooBarBaz.new
     end
   end
@@ -87,7 +87,7 @@ module AdapterTests
   end
 
   def test_raises_an_error_when_a_graph_query_is_not_implemented
-    assert_raises Chassis::Repo::GraphQueryNotImplementedError do
+    assert_raises Chassis::GraphQueryNotImplementedError do
       adapter.graph_query Person, PersonFooBarBaz.new
     end
   end
