@@ -214,18 +214,17 @@ CircuitPanel.test.run do
 end
 ```
 
-## Chassis::Service
+## Chassis::Strategy
 
-`Chassis::Service` is a way to define boundary objects. The class
+`Chassis::Strategy` is a way to define boundary objects. The class
 defines the all required methods, then delegates the work to an
-implementation. This is the strategy pattern in a nutshell.
-Implementations can be registered and used. A null object
-implementation is automatically generated and set as the default
-implementation. Here are some examples.
+implementation. Implementations are be registered and used. A null
+object implementation is automatically generated and set as the
+default implementation. Here are some examples.
 
 ```ruby
 class Mailer
-  include Chassis.service(:deliver, :deliveries)
+  include Chassis.strategy(:deliver, :deliveries)
 end
 
 class SMTPDelivery
@@ -264,18 +263,18 @@ as class if you don't like the instance flavor.
 
 ```ruby
 class Mailer
-  extend Chassis.service(:foo, :bar, :bar)
+  extend Chassis.strategy(:foo, :bar, :bar)
 end
 
 Mailer.register, :smtp, SomeSmtpClass
 ```
 
-Since `Chassis.service` returns a new module, you can call define
+Since `Chassis.strategy` returns a new module, you can call define
 methods and call `super` just like normal.
 
 ```ruby
 class Mailer
-  include Chassis.service(:deliver)
+  include Chassis.strategy(:deliver)
 
   def deliver(mail)
     raise "No address" unless mail.to
