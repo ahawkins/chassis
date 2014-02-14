@@ -40,7 +40,14 @@ module Chassis
 
     def query!(klass, selector)
       result = query klass, selector
-      fail NoQueryResultError, selector if result.nil? || result.empty?
+      no_results = result.nil? || result.empty?
+
+      if no_results && block_given?
+        yield klass, selector
+      else
+        fail NoQueryResultError, selector
+      end
+
       result
     end
   end

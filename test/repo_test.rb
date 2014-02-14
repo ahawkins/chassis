@@ -11,6 +11,7 @@ class RepoTest < MiniTest::Unit::TestCase
     end
   end
 
+  CustomError = Class.new RuntimeError
   TestEmptyArrayQuery = Struct.new :foo
   TestNilQuery = Struct.new :foo
   Person = Struct.new :name
@@ -33,6 +34,14 @@ class RepoTest < MiniTest::Unit::TestCase
   def test_query_bang_raises_an_exception_if_nil
     assert_raises Chassis::NoQueryResultError do
       repo.query! Person, TestNilQuery.new(:foo)
+    end
+  end
+
+  def test_query_bang_can_take_a_block_to_customize_exception
+    assert_raises CustomError do
+      repo.query! Person, TestNilQuery.new(:foo) do |klass, selector|
+        fail CustomError
+      end
     end
   end
 end
