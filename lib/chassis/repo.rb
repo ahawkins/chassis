@@ -59,8 +59,7 @@ module Chassis
   end
 end
 
-require_relative 'repo/record_map'
-require_relative 'repo/base_implementation'
-require_relative 'repo/memory_implementation'
-require_relative 'repo/null_implementation'
 require_relative 'repo/delegation'
+require_relative 'repo/base_repo'
+require_relative 'repo/memory_repo'
+require_relative 'repo/null_repo'

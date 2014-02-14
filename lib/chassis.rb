@@ -68,6 +68,6 @@ require_relative 'chassis/rack/no_robots'
 
 require_relative 'chassis/web_service'
 
-Chassis.repo.register :memory, Chassis::Repo::MemoryImplementation.new
-Chassis.repo.register :null, Chassis::Repo::NullImplementation.new
+Chassis.repo.register :memory, Chassis::MemoryRepo.new
+Chassis.repo.register :null, Chassis::NullRepo.new
 Chassis.repo.use :memory

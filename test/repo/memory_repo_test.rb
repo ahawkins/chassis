@@ -1,8 +1,8 @@
 require_relative '../test_helper'
-require_relative 'implementation_tests'
+require_relative 'repo_tests'
 
-class InMemoryImplementationTest < MiniTest::Unit::TestCase
-  class TestImplementation < Chassis::Repo::MemoryImplementation
+class MemoryRepoTest < MiniTest::Unit::TestCase
+  class TestRepo < Chassis::MemoryRepo
     def query_person_named(klass, selector)
       all(klass).find do |person|
         person.name == selector.name
@@ -16,12 +16,12 @@ class InMemoryImplementationTest < MiniTest::Unit::TestCase
     end
   end
 
-  include ImplementationTests
+  include RepoTests
 
-  attr_reader :implementation
+  attr_reader :repo
 
   def setup
-    @implementation = TestImplementation.new
+    @repo = TestRepo.new
     super
   end
 end
