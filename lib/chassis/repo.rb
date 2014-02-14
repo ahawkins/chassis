@@ -34,6 +34,12 @@ module Chassis
       end
     end
   end
+
+  class << self
+    def repo
+      Repo.instance
+    end
+  end
 end
 
 require_relative 'repo/in_memory_adapter'

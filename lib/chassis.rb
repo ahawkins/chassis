@@ -68,5 +68,5 @@ require_relative 'chassis/rack/no_robots'
 
 require_relative 'chassis/web_service'
 
-Chassis::Repo.instance.register :memory, Chassis::Repo::InMemoryAdapter.new
-Chassis::Repo.instance.use :memory
+Chassis.repo.register :memory, Chassis::Repo::InMemoryAdapter.new
+Chassis.repo.use :memory
