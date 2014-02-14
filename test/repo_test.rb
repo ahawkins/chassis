@@ -9,12 +9,16 @@ class RepoTest < MiniTest::Unit::TestCase
     def query_test_nil_query(klass, q)
       nil
     end
+
+    def update(record)
+      record.name = 'updated'
+    end
   end
 
   CustomError = Class.new RuntimeError
   TestEmptyArrayQuery = Struct.new :foo
   TestNilQuery = Struct.new :foo
-  Person = Struct.new :name
+  Person = Struct.new :id, :name
 
   def repo
     Chassis.repo
@@ -43,5 +47,17 @@ class RepoTest < MiniTest::Unit::TestCase
         fail CustomError
       end
     end
+  end
+
+  def test_save_creates_records_without_ids
+    person = Person.new nil, 'ahawkins'
+    repo.save person
+    assert person.id
+  end
+
+  def test_save_updates_records_otherwise
+    person = Person.new 1, 'ahawkins'
+    repo.save person
+    assert_equal 'updated', person.name
   end
 end

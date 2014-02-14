@@ -20,9 +20,9 @@ module Chassis
   class Repo
     include Singleton
     include Chassis.strategy(*[
-      :clear, :count, :find, :delete,
+      :find, :create, :update, :delete,
       :first, :last, :query, :graph_query,
-      :sample, :empty?
+      :sample, :empty?, :count, :clear
     ])
 
     def find(klass, id)
