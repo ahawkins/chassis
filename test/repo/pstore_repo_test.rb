@@ -1,6 +1,7 @@
 require_relative '../test_helper'
 require_relative 'repo_tests'
 require 'pstore'
+require 'tempfile'
 
 class PStoreRepoTest < MiniTest::Unit::TestCase
   class TestRepo < Chassis::PStoreRepo
@@ -22,8 +23,8 @@ class PStoreRepoTest < MiniTest::Unit::TestCase
   attr_reader :repo
 
   def setup
-    pstore = PStore.new tmp_path.join('repo.pstore')
-    @repo = TestRepo.new pstore
+    tempfile = Tempfile.new 'pstore.test'
+    @repo = TestRepo.new PStore.new(tempfile.path)
     super
   end
 end
