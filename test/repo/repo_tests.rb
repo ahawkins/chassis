@@ -6,6 +6,11 @@ module RepoTests
   PersonNamed = Struct.new :name
   PersonFooBarBaz = Class.new
 
+  def repo
+    fail "test class must assign @repo" unless @repo
+    @repo
+  end
+
   def setup
     repo.clear
   end

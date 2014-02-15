@@ -20,8 +20,6 @@ class PStoreRepoTest < MiniTest::Unit::TestCase
 
   include RepoTests
 
-  attr_reader :repo
-
   def setup
     tempfile = Tempfile.new 'pstore.test'
     @repo = TestRepo.new PStore.new(tempfile.path)

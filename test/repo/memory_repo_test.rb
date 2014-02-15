@@ -18,8 +18,6 @@ class MemoryRepoTest < MiniTest::Unit::TestCase
 
   include RepoTests
 
-  attr_reader :repo
-
   def setup
     @repo = TestRepo.new
     super

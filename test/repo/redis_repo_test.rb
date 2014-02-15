@@ -19,8 +19,6 @@ class RedisRepoTest < MiniTest::Unit::TestCase
 
   include RepoTests
 
-  attr_reader :repo
-
   def setup
     @repo = TestRepo.new Redis.new
     super
