@@ -1,5 +1,5 @@
 module Chassis
-  class RedisRepo < Chassis::MemoryRepo
+  class RedisRepo < Chassis::BaseRepo
     class RedisMap
       def initialize(redis)
         @redis = redis

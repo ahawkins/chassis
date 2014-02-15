@@ -1,5 +1,5 @@
 module Chassis
-  class PStoreRepo < MemoryRepo
+  class PStoreRepo < BaseRepo
     class AccessProxy < Chassis::Proxy
       def map
         __getobj__[:map] ||= Chassis::Repo::RecordMap.new

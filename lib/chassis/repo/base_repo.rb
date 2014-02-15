@@ -1,5 +1,30 @@
 module Chassis
   class BaseRepo
+    def create(record)
+      record.id ||= next_id
+      map.set record
+    end
+
+    def update(record)
+      map.set record
+    end
+
+    def delete(record)
+      map.delete record
+    end
+
+    def clear
+      map.clear
+    end
+
+    def all(klass)
+      map.all klass
+    end
+
+    def find(klass, id)
+      map.get klass, id
+    end
+
     def first(klass)
       all(klass).first
     end
@@ -37,6 +62,16 @@ module Chassis
     end
 
     private
+    def map
+      @map
+    end
+
+    def next_id
+      @counter ||= 0
+      @counter = @counter + 1
+      @counter
+    end
+
     def query_method(klass, selector)
       "query_#{selector.class.name.demodulize.underscore}"
     end
