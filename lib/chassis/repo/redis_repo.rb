@@ -6,8 +6,7 @@ module Chassis
       end
 
       def clear
-        result = redis.del key
-        fail 'failed to delete' if redis.exists key
+        redis.del key
       end
 
       def all(klass)
