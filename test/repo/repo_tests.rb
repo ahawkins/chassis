@@ -6,6 +6,10 @@ module RepoTests
   PersonNamed = Struct.new :name
   PersonFooBarBaz = Class.new
 
+  def setup
+    repo.clear
+  end
+
   def test_crud_operations
     assert_equal 0, repo.count(Person), "Precondition: there should be no records"
 
@@ -27,20 +31,6 @@ module RepoTests
     repo.delete(person)
 
     assert_equal 0, repo.count(Person)
-  end
-
-  def test_clear_wipes_all_data
-    assert_equal 0, repo.count(Person), "Precondition: there should be no records"
-
-    person = Person.new 'ahawkins'
-    repo.create person
-
-    assert_equal 1, repo.count(Person)
-
-    repo.clear
-
-    assert_equal 0, repo.count(Person)
-    assert_empty repo.all(Person)
   end
 
   def test_raises_error_when_no_reecord_exists
