@@ -60,6 +60,7 @@ module Chassis
 end
 
 require_relative 'repo/delegation'
+require_relative 'repo/lazy_association'
 require_relative 'repo/record_map'
 require_relative 'repo/base_repo'
 require_relative 'repo/null_repo'
