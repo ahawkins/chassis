@@ -113,5 +113,6 @@ module Chassis
     def strategy(*methods)
       Strategy.new *methods
     end
+    alias_method :service, :strategy
   end
 end
