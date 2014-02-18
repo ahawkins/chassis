@@ -6,13 +6,13 @@ require 'tempfile'
 class PStoreRepoTest < MiniTest::Unit::TestCase
   class TestRepo < Chassis::PStoreRepo
     def query_person_named(klass, selector)
-      all(klass).find do |person|
+      all(klass).select do |person|
         person.name == selector.name
       end
     end
 
     def graph_query_person_named(klass, selector)
-      all(klass).find do |person|
+      all(klass).select do |person|
         person.name == selector.name
       end
     end

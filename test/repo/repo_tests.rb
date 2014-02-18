@@ -92,7 +92,9 @@ module RepoTests
 
     assert_equal 2, repo.count(Person)
 
-    assert_equal adam, repo.query(Person, PersonNamed.new('ahawkins'))
+    query = repo.query(Person, PersonNamed.new('ahawkins'))
+    refute_empty query
+    assert_equal adam, query.first
   end
 
   def test_raises_an_error_when_a_graph_query_is_not_implemented
@@ -110,6 +112,8 @@ module RepoTests
     repo.create adam
     repo.create peter
 
-    assert_equal adam, repo.graph_query(Person, PersonNamed.new('ahawkins'))
+    query = repo.query(Person, PersonNamed.new('ahawkins'))
+    refute_empty query
+    assert_equal adam, query.first
   end
 end
