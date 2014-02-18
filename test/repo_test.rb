@@ -10,6 +10,12 @@ class RepoTest < MiniTest::Unit::TestCase
       nil
     end
 
+    def query_person_by_name(klass, q)
+      all(klass).find do |record|
+        record.name == q.name
+      end
+    end
+
     def update(record)
       record.name = 'updated'
     end
@@ -18,6 +24,7 @@ class RepoTest < MiniTest::Unit::TestCase
   CustomError = Class.new RuntimeError
   TestEmptyArrayQuery = Struct.new :foo
   TestNilQuery = Struct.new :foo
+  PersonByName = Struct.new :name
   Person = Struct.new :id, :name
 
   def repo
@@ -47,6 +54,12 @@ class RepoTest < MiniTest::Unit::TestCase
         fail CustomError
       end
     end
+  end
+
+  def test_query_bang_works_when_a_non_array_object_is_returned
+    person = Person.new nil, 'ahawkins'
+    repo.save person
+    assert_equal person, repo.query!(Person, PersonByName.new('ahawkins'))
   end
 
   def test_save_creates_records_without_ids

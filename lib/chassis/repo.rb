@@ -40,11 +40,11 @@ module Chassis
 
     def query!(klass, selector)
       result = query klass, selector
-      no_results = result.nil? || result.empty?
+      no_results = result.respond_to?(:empty?) ? result.empty? : result.nil?
 
       if no_results && block_given?
         yield klass, selector
-      else
+      elsif no_results
         fail NoQueryResultError, selector
       end
 
