@@ -7,6 +7,10 @@ module Chassis
     "The #{object.class} does not respond to #{method}"
   end
 
+  ImplementationNotAvailableError = Chassis.error do |implementation|
+    "#{implementation} currently down"
+  end
+
   class Strategy < Module
     class NullImplementation
       def up?
@@ -50,6 +54,11 @@ module Chassis
 
       def down?
         !up?
+      end
+
+      def check
+        fail ImplementationNotAvailableError, implementation unless up?
+        true
       end
 
       def implementations

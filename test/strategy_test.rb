@@ -91,6 +91,18 @@ class StrategyTest < MiniTest::Unit::TestCase
     assert service.down?
   end
 
+  def test_can_check_to_see_if_services_are_up
+    service = build do
+      include Chassis.strategy(:foo)
+    end.new
+
+    service.use :down
+
+    assert_raises Chassis::ImplementationNotAvailableError do
+      service.check
+    end
+  end
+
   def test_can_implement_multiple_methods_at_once
     service = build do
       include Chassis.strategy(:foo, :bar)
