@@ -73,6 +73,11 @@ class RepoDelegationTest < MiniTest::Unit::TestCase
     repo.query :foo
   end
 
+  def test_query_bang__delegates_to_the_target
+    target.expects(:query!).with(Person, :foo)
+    repo.query! :foo
+  end
+
   def test_graph_query_delegates_to_the_target
     target.expects(:graph_query).with(Person, :foo)
     repo.graph_query(:foo)

@@ -37,6 +37,10 @@ module Chassis
         backend.query object_class, selector
       end
 
+      def query!(selector, &block)
+        backend.query! object_class, selector, &block
+      end
+
       def sample
         backend.sample object_class
       end
