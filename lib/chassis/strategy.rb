@@ -22,6 +22,12 @@ module Chassis
       end
     end
 
+    class DownImplementation < NullImplementation
+      def up?
+        false
+      end
+    end
+
     module Methods
       def register(name, implementation)
         implementations[name] = implementation
@@ -55,20 +61,22 @@ module Chassis
       end
     end
 
-    module NullImplementationForInstances
+    module DefaultImplementationsForInstances
       def initialize(*args)
         super
         register :null, NullImplementation.new
+        register :down, DownImplementation.new
         use :null
       end
     end
 
     def included(base)
-      base.include NullImplementationForInstances
+      base.include DefaultImplementationsForInstances
     end
 
     def extended(klass)
       klass.register :null, NullImplementation.new
+      klass.register :down, DownImplementation.new
       klass.use :null
     end
 

@@ -73,6 +73,24 @@ class StrategyTest < MiniTest::Unit::TestCase
     assert_equal [1,2], service.add(1,2)
   end
 
+  def test_generates_a_down_implementation
+    service = build do
+      include Chassis.strategy(:add)
+    end.new
+
+    service.use :down
+    assert service.down?
+  end
+
+  def test_down_implementation_works_with_extend
+    service = build do
+      extend Chassis.strategy(:add)
+    end
+
+    service.use :down
+    assert service.down?
+  end
+
   def test_can_implement_multiple_methods_at_once
     service = build do
       include Chassis.strategy(:foo, :bar)
