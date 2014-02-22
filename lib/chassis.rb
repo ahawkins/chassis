@@ -58,6 +58,8 @@ require_relative 'chassis/circuit_panel'
 
 require_relative 'chassis/strategy'
 
+require_relative 'chassis/registry'
+
 require_relative 'chassis/repo'
 
 require_relative 'chassis/rack/bouncer'
