@@ -12,10 +12,6 @@ module Chassis
       map[key] = value
     end
 
-    def [](key)
-      fetch key
-    end
-
     def fetch(key)
       map.fetch key do
         fail UnregisteredError, key
