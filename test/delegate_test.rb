@@ -30,4 +30,12 @@ class DelegateTest < MiniTest::Unit::TestCase
       delegator.add 1
     end
   end
+
+  def test_fails_with_an_error_if_nothing_to_delegate_to
+    assert_raises ArgumentError do
+      Class.new do
+        include Chassis.delegate(:foo, :bar)
+      end
+    end
+  end
 end

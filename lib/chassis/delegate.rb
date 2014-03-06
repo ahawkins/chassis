@@ -4,7 +4,13 @@ module Chassis
   end
 
   class Delegation < Module
-    def initialize(*methods, delegate:)
+    def initialize(*methods)
+      options = methods.last.is_a?(Hash) ? methods.pop : { }
+
+      delegate = options.fetch :to do
+        fail ArgumentError, ":to not given"
+      end
+
       methods.each do |method|
         define_method method do |*args, &block|
           object = send delegate
@@ -16,8 +22,8 @@ module Chassis
   end
 
   class << self
-    def delegate(*methods, to:)
-      Delegation.new *methods, delegate: to
+    def delegate(*methods)
+      Delegation.new *methods
     end
   end
 end
