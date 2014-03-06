@@ -22,7 +22,8 @@ module Chassis
     include Chassis.strategy(*[
       :find, :create, :update, :delete,
       :first, :last, :query, :graph_query,
-      :sample, :empty?, :count, :clear
+      :sample, :empty?, :count, :clear,
+      :initialize_storage
     ])
 
     def find(klass, id)

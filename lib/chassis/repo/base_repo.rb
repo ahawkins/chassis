@@ -61,6 +61,10 @@ module Chassis
       end
     end
 
+    def intialize_storage
+
+    end
+
     private
     def map
       @map
