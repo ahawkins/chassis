@@ -62,6 +62,8 @@ require_relative 'chassis/registry'
 
 require_relative 'chassis/repo'
 
+require_relative 'chassis/delegate'
+
 require_relative 'chassis/rack/bouncer'
 require_relative 'chassis/rack/builder_shim_patch'
 require_relative 'chassis/rack/health_check'
