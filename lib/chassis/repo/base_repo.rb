@@ -61,7 +61,7 @@ module Chassis
       end
     end
 
-    def intialize_storage
+    def initialize_storage
 
     end
 

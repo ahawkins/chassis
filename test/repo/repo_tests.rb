@@ -13,6 +13,7 @@ module RepoTests
 
   def setup
     repo.clear
+    repo.initialize_storage
   end
 
   def test_crud_operations
