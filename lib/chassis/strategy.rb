@@ -80,7 +80,7 @@ module Chassis
     end
 
     def included(base)
-      base.include DefaultImplementationsForInstances
+      base.send(:include, DefaultImplementationsForInstances)
     end
 
     def extended(klass)
