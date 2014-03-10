@@ -57,6 +57,10 @@ module Chassis
         backend.graph_query object_class, selector
       end
 
+      def lazy(id)
+        LazyAssociation.new self, id
+      end
+
       def object_class
         @object_class ||= begin
           fail UnknownObjectClassError unless name

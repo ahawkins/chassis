@@ -92,4 +92,10 @@ class RepoDelegationTest < MiniTest::Unit::TestCase
     target.expects(:empty?).with(Person)
     repo.empty?
   end
+
+  def test_lazy_returns_new_lazy_associations
+    target.expects(:find).never
+    person = repo.lazy 'ahawkins'
+    assert_equal 'ahawkins', person.id
+  end
 end
