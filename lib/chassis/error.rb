@@ -4,8 +4,12 @@ module Chassis
       if super_class_or_message.is_a? Class
         Class.new super_class_or_message do
           define_method :initialize do |*args|
-            message = yield *args
-            super message
+            if block_given?
+              message = yield *args
+              super message
+            else
+              super *args
+            end
           end
         end
       else

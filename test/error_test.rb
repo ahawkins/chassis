@@ -25,4 +25,18 @@ class ErrorTest < MiniTest::Unit::TestCase
     error = klass.new
     assert_equal "test error", error.message
   end
+
+  def test_errors_without_arguments_can_be_used_like_normal
+    klass = Chassis.error
+
+    error = assert_raises klass do
+      fail klass, "test"
+    end
+
+    assert_equal 'test', error.message
+
+    assert_raises klass do
+      fail klass
+    end
+  end
 end
