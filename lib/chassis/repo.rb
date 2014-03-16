@@ -1,5 +1,3 @@
-require 'singleton'
-
 module Chassis
   RecordNotFoundError = Chassis.error do |klass, id|
     "Could not locate #{klass} with id #{id}"
@@ -18,13 +16,18 @@ module Chassis
   end
 
   class Repo
-    include Singleton
     include Chassis.strategy(*[
       :all, :find, :create, :update, :delete,
       :first, :last, :query, :graph_query,
       :sample, :empty?, :count, :clear,
       :initialize_storage
     ])
+
+    class << self
+      def default
+        @default ||= new
+      end
+    end
 
     def find(klass, id)
       raise ArgumentError, "id cannot be nil!" if id.nil?
@@ -55,7 +58,7 @@ module Chassis
 
   class << self
     def repo
-      Repo.instance
+      Repo.default
     end
   end
 end
