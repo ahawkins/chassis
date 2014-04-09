@@ -20,7 +20,7 @@ module Chassis
   class Repo
     include Singleton
     include Chassis.strategy(*[
-      :find, :create, :update, :delete,
+      :all, :find, :create, :update, :delete,
       :first, :last, :query, :graph_query,
       :sample, :empty?, :count, :clear,
       :initialize_storage
