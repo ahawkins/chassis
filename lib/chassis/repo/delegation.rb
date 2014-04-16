@@ -71,7 +71,7 @@ module Chassis
       end
 
       def backend
-        Repo.instance
+        Repo.default
       end
     end
   end
