@@ -24,7 +24,7 @@ class RepoDelegationTest < MiniTest::Unit::TestCase
   def setup
     @target = mock
     @person = Person.new 'ahawkins'
-    Chassis::Repo.stubs(:instance).returns(target)
+    Chassis::Repo.stubs(:default).returns(target)
   end
 
   def test_classes_that_dont_match_on_name_fail_with_a_helpful_error
