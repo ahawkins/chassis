@@ -4,7 +4,7 @@ Chassis is a collection of new classes and enhancements to existing
 projects for building maintainable applications. I choose the name
 "chassis" because I'm a car guy. A chassis is a car's foundation.
 Every car has key components: there is an engine, transmission,
-differential, suspension, eletrical system, and a bunch of other
+differential, suspension, electrical system, and a bunch of other
 things. They fit together on the chassis in a certain way, there are
 guidelines but no one is going to stop you from building a custom
 front suspension on a typical chassis. And that's the point. The
@@ -15,7 +15,7 @@ complete engines. The engine block and valve train are predecided. You
 must decide which fuel delivery and exhaust system to use. Then you
 mount it in the chassis. In all things there is a line between
 prepackaged DIY and turn-key solutions. This project is a combination
-of a chassis and long block. Some things have been predicded and
+of a chassis and long block. Some things have been predecided and
 others are left to you. In that sense this project is a utility belt.
 All the components are there, you just need to figure out how to put
 them together.
@@ -42,7 +42,7 @@ Or install it yourself as:
 
 Right off the bat, chassis is for building web applications. It
 depends on other gems to make that happen. Chassis fully endorses rack
-& sinatra as the best way to do this. So it contains enhancements and
+& Sinatra as the best way to do this. So it contains enhancements and
 middleware to make that so.
 
 * `Chassis::Rack::Bouncer` - takes a block. Used to bounce spam or
@@ -74,8 +74,8 @@ other customizations.
 Chassis includes a
 [repository](http://martinfowler.com/eaaCatalog/repository.html) using
 the query pattern as well. The repository pattern is perfect because
-it does not require knowledge about your persistance layer. It is the
-access layer. A null, in-memory, and redis adapter are included. You
+it does not require knowledge about your persistence layer. It is the
+access layer. A null, in-memory, and Redis adapter are included. You
 can subclass these adapters to make your own.
 `Chassis::Repo::Delegation` can be included in other classes to
 delegate to the repository.
@@ -90,7 +90,7 @@ end
 
 Now there are CRUD methods available on `CustomerRepo` that delegate
 to the repository for `Customer` objects. `Chassis::Persistence` can
-be included in any object. It will make the object compatibile with
+be included in any object. It will make the object compatible with
 the matching repo.
 
 ```ruby
@@ -100,7 +100,7 @@ end
 ```
 
 Now `Customer` responds to `id`, `save`, and `repo`. `repo` looks for
-the a repository class matching the class name (eg `CustomerRepo`).
+a repository class matching the class name (e.g. `CustomerRepo`).
 Override as you see if.
 
 More on my blog
@@ -129,7 +129,7 @@ end
 
 ## Outgoing HTTP with Faraday
 
-Chassis uses Faraday becuase it's the best god damn HTTP client in
+Chassis uses Faraday because it's the best god damn HTTP client in
 ruby. Chassis includes a bunch of middleware to make it even better.
 
 ```ruby
@@ -175,7 +175,7 @@ end
 ## Circuit Breakers with Breaker
 
 [Breaker](https://github.com/ahawkins/breaker) provides the low level
-implementation. `Chassis::CircuitPanel` is a class for unifiying
+implementation. `Chassis::CircuitPanel` is a class for unifying
 access to all the different circuits in the application. This is
 useful because other parts of the code don't need to know about how
 the circuit is implemented. `Chassis.circuit_panel` behaves like
@@ -197,7 +197,7 @@ end
 ```
 
 Since `Chassis.circuit_panel` returns a class, you can do anything you
-want. Don't like to have to instantiate a new instance everytime? Use
+want. Don't like to have to instantiate a new instance every time? Use
 a singleton and assign that to a constant.
 
 ```ruby
@@ -209,7 +209,7 @@ CircuitPanel = Chassis.circuit_panel do
   circuit :test, timeout: 10, retry_threshold: 6
 end.instance
 
-CircuitPanel.test.run do 
+CircuitPanel.test.run do
   # your stuff here
 end
 ```
@@ -320,7 +320,7 @@ library logger. `Chassis::Logger` default the `logdev` argument to
 `Chassis.stream`. This gives a unified place to assign all output.
 The log level can also be controlled by the `LOG_LEVEL` environment
 variable. This makes it possible to restart/boot the application with
-a new log level without reploying code.
+a new log level without redeploying code.
 
 ## Chassis::Observable
 
