@@ -24,6 +24,8 @@ This project chooses an ideal gem stack for building web applications
 and enhancements to existing projects. It's just a enough structure to
 build an application. It is the chassis you build your application on.
 
+Here's an [example](https://github.com/ahawkins/chassis-example) I put together.
+
 ## Installation
 
 Add this line to your application's Gemfile:
