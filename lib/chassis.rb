@@ -33,12 +33,11 @@ module Chassis
   end
 end
 
-require_relative 'chassis/core_ext/string'
-require_relative 'chassis/core_ext/hash'
+require_relative 'chassis/hash_utils'
+require_relative 'chassis/string_utils'
+require_relative 'chassis/array_utils'
 
 require_relative 'chassis/error'
-
-require_relative 'chassis/inflector'
 
 require_relative 'chassis/logger'
 

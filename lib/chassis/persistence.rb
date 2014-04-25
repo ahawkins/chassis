@@ -9,7 +9,7 @@ module Chassis
 
       def repo
         begin
-          @repo ||= "#{name}Repo".constantize
+          @repo ||= StringUtils.constantize "#{name}Repo"
         rescue NameError
           fail "#{name}Repo not defined! Define this method to specify a different repo"
         end

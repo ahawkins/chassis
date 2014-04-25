@@ -66,7 +66,7 @@ module Chassis
           fail UnknownObjectClassError unless name
           match = name.match(/^(.+)Repo$/)
           fail UnknownObjectClassError unless match
-          match[1].constantize
+          StringUtils.constantize match[1]
         end
       end
 

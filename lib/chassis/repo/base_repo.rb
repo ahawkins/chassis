@@ -77,7 +77,7 @@ module Chassis
     end
 
     def query_method(klass, selector)
-      "query_#{selector.class.name.demodulize.underscore}"
+      "query_#{selector_key(selector)}"
     end
 
     def query_implemented?(klass, selector)
@@ -85,11 +85,15 @@ module Chassis
     end
 
     def graph_query_method(klass, selector)
-      "graph_query_#{selector.class.name.demodulize.underscore}"
+      "graph_query_#{selector_key(selector)}"
     end
 
     def graph_query_implemented?(klass, selector)
       respond_to? graph_query_method(klass, selector)
+    end
+
+    def selector_key(selector)
+      StringUtils.underscore(StringUtils.demodulize(selector.class.name))
     end
   end
 end

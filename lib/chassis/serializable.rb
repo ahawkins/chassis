@@ -45,7 +45,7 @@ module Chassis
     end
 
     def from_hash(hash)
-      marshal_load hash.symbolize_keys
+      marshal_load HashUtils.symbolize(hash)
       self
     end
   end

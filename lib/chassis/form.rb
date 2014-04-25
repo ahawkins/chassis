@@ -6,7 +6,7 @@ module Chassis
   class FormModule < Module
     module InstanceMethods
       def initialize(hash = {})
-        assert_valid_keys! hash.symbolize_keys
+        assert_valid_keys! HashUtils.symbolize(hash)
         super
         yield self if block_given?
       end
