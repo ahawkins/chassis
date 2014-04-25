@@ -50,6 +50,8 @@ require_relative 'chassis/persistence'
 
 require_relative 'chassis/initializable'
 
+require_relative 'chassis/serializable'
+
 require_relative 'chassis/observable'
 
 require_relative 'chassis/dirty_session'
