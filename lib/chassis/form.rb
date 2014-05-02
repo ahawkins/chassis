@@ -41,10 +41,10 @@ module Chassis
     end
 
     def included(base)
-      base.include Virtus.model
+      base.send(:include, Virtus.model)
       base.extend ClassMethods
-      base.include Virtus::DirtyAttribute
-      base.include InstanceMethods
+      base.send(:include, Virtus::DirtyAttribute)
+      base.send(:include, InstanceMethods)
     end
   end
 
