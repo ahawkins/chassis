@@ -19,6 +19,8 @@ require 'faraday'
 
 require 'breaker'
 
+require 'interchange'
+
 module Chassis
   Proxy = Prox
 
@@ -56,8 +58,6 @@ require_relative 'chassis/observable'
 require_relative 'chassis/dirty_session'
 
 require_relative 'chassis/circuit_panel'
-
-require_relative 'chassis/strategy'
 
 require_relative 'chassis/registry'
 

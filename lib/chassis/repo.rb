@@ -16,7 +16,7 @@ module Chassis
   end
 
   class Repo
-    include Chassis.strategy(*[
+    include Interchange.new(*[
       :all, :find, :create, :update, :delete,
       :first, :last, :query, :graph_query,
       :sample, :empty?, :count, :clear,
