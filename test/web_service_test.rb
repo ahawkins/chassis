@@ -52,7 +52,7 @@ class WebServiceTest < MiniTest::Unit::TestCase
   end
 
   def test_parses_json_requests
-    assert_middleware app.middleware, Rack::PostBodyContentTypeParser
+    assert_middleware app.middleware, Chassis::Rack::JsonBodyParser
   end
 
   def test_blocks_robots
@@ -73,7 +73,7 @@ class WebServiceTest < MiniTest::Unit::TestCase
 
   def test_can_enable_cors
     @app = Class.new Chassis::WebService do
-      enable :cors 
+      enable :cors
 
       get '/' do
         'hi'
