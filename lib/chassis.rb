@@ -21,6 +21,8 @@ require 'breaker'
 
 require 'interchange'
 
+require 'tnt'
+
 module Chassis
   Proxy = Prox
 
