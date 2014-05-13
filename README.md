@@ -26,6 +26,15 @@ build an application. It is the chassis you build your application on.
 
 Here's an [example](https://github.com/ahawkins/chassis-example) I put together.
 
+## Support Libraries
+
+Chassis is implemented with help from a few smaller libraries. A
+unified interface if you do not want to know about such things.
+
+* Errors with [TNT](https://github.com/ahawkins/tnt)
+* Object initialization with [Lift](https://github.com/ahawkins/lift)
+* Interchangeable objects with [Interchange](https://github.com/ahawkins/interchange)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -216,78 +225,6 @@ CircuitPanel.test.run do
 end
 ```
 
-## Chassis::Strategy
-
-`Chassis::Strategy` is a way to define boundary objects. The class
-defines the all required methods, then delegates the work to an
-implementation. Implementations are be registered and used. A null
-object implementation is automatically generated and set as the
-default implementation. Here are some examples.
-
-```ruby
-class Mailer
-  include Chassis.strategy(:deliver, :deliveries)
-end
-
-class SMTPDelivery
-  def deliver(mail)
-    # send w/SMTP
-  end
-
-  def deliveries
-    # check the email account
-  end
-end
-
-class SnailMail
-  def deliver(mail)
-    # print the mail and go to the post office
-  end
-
-  def deliveries
-    # go outside and check the mailbox
-  end
-end
-
-mailer = Mailer.new
-mailer.register :smtp, SMTPDelivery.new
-mailer.register :snail_mail, SnailMail.new
-
-mail.use :smtp
-mail.deliver some_message
-
-mail.use :null # switch back to the null implementation.
-```
-
-These objects are very useful when you have an interaction that needs
-to happen but implementations can vary widely. You can also use this
-as class if you don't like the instance flavor.
-
-```ruby
-class Mailer
-  extend Chassis.strategy(:foo, :bar, :bar)
-end
-
-Mailer.register, :smtp, SomeSmtpClass
-```
-
-Since `Chassis.strategy` returns a new module, you can call define
-methods and call `super` just like normal.
-
-```ruby
-class Mailer
-  include Chassis.strategy(:deliver)
-
-  def deliver(mail)
-    raise "No address" unless mail.to
-    super
-  end
-end
-```
-
-This is great when you have some shared logic at the boundary but not
-across implementations.
-
 ## Chassis::DirtySession
 
 A proxy object used to track assignments. Wrap an object in a dirty
@@ -332,26 +269,6 @@ from the standard library implementation for two reasons:
 * you don't need to call `changed` for `notify_observers` to work.
 * `notify_obsevers` includes `self` as first argument to all observers
 * there is only the `add_observer` method.
-
-## Chassis::Initializable
-
-Encapsulate the common pattern of passing a hash for assignments to
-`initialize`. A block can be given as well.
-
-
-```ruby
-class Person
-  include Chassis::Initializable
-
-  attr_accessor :name, :email
-end
-
-Person.new name: 'adam', email: 'example@example.com'
-
-Person.new name: 'adam' do |adam|
-  adam.email = 'example@example.com'
-end
-```
 
 ## Contributing
 
