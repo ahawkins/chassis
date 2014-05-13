@@ -1,5 +1,9 @@
 require "chassis/version"
 
+require 'interchange'
+require 'tnt'
+require 'lift'
+
 require 'logger-better'
 
 require 'sinatra'
@@ -19,9 +23,6 @@ require 'faraday'
 
 require 'breaker'
 
-require 'interchange'
-
-require 'tnt'
 
 module Chassis
   Proxy = Prox
