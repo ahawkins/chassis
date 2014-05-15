@@ -26,6 +26,13 @@ class JsonBodyParserTest < MiniTest::Unit::TestCase
     assert_equal 'bar', params.fetch('foo')
   end
 
+  def test_parses_json_requests_with_charset
+    post '/', JSON.dump({foo: 'bar'}), 'CONTENT_TYPE' => 'application/json; charset=utf-8'
+
+    params = JSON.load last_response.body
+    assert_equal 'bar', params.fetch('foo')
+  end
+
   def test_handles_empty_get_requests
     get '/', { }, { 'CONTENT_TYPE' => 'application/json' }
     assert_equal 200, last_response.status
