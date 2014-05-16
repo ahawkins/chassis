@@ -18,11 +18,11 @@ class ExceptionHandlingTest < MiniTest::Unit::TestCase
   def test_reports_errors_as_json
     app = ->(env) { fail "Test Error" }
 
-    middleware = Chassis::Rack::ExceptionHandling.new(app)
+    middleware = Chassis::Rack::ExceptionHandling.new app
 
     env = { 'rack.errors' => FakeLogger.new }
 
-    status, headers, body = middleware.call(env)
+    status, headers, body = middleware.call env
 
     assert_equal 'application/json', headers.fetch('Content-Type')
     refute_empty body
@@ -34,12 +34,12 @@ class ExceptionHandlingTest < MiniTest::Unit::TestCase
   def test_prints_trace_to_error_stream
     app = ->(env) { fail "Test Error" }
 
-    middleware = Chassis::Rack::ExceptionHandling.new(app)
+    middleware = Chassis::Rack::ExceptionHandling.new app
 
     logger = FakeLogger.new
     env = { 'rack.errors' => logger }
 
-    middleware.call(env)
+    middleware.call env
 
     refute_empty logger.printed
   end
@@ -47,9 +47,9 @@ class ExceptionHandlingTest < MiniTest::Unit::TestCase
   def test_calls_through_to_the_app
     app = ->(env) { [200, { }, ['ok']] }
 
-    middleware = Chassis::Rack::ExceptionHandling.new(app)
+    middleware = Chassis::Rack::ExceptionHandling.new app
 
-    status, headers, body = middleware.call({})
+    status, headers, body = middleware.call({ })
 
     assert_equal 200, status
   end
