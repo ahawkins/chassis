@@ -74,6 +74,7 @@ require_relative 'chassis/rack/health_check'
 require_relative 'chassis/rack/instrumentation'
 require_relative 'chassis/rack/no_robots'
 require_relative 'chassis/rack/json_body_parser'
+require_relative 'chassis/rack/exception_handling'
 
 require_relative 'chassis/web_service'
 
