@@ -1,9 +1,15 @@
 require_relative '../test_helper'
 
 class ExceptionHandlingTest < MiniTest::Unit::TestCase
+  DummyError = Class.new StandardError
+
   class FakeLogger
+    def initialize
+      @written = [ ]
+    end
+
     def write(*args)
-      @written = args
+      @written << args.join
     end
 
     def flush(*args)
@@ -11,7 +17,7 @@ class ExceptionHandlingTest < MiniTest::Unit::TestCase
     end
 
     def printed
-      @printed
+      @printed.join
     end
   end
 
@@ -32,7 +38,7 @@ class ExceptionHandlingTest < MiniTest::Unit::TestCase
   end
 
   def test_prints_trace_to_error_stream
-    app = ->(env) { fail "Test Error" }
+    app = ->(env) { fail DummyError, "Test Error" }
 
     middleware = Chassis::Rack::ExceptionHandling.new app
 
@@ -42,6 +48,8 @@ class ExceptionHandlingTest < MiniTest::Unit::TestCase
     middleware.call env
 
     refute_empty logger.printed
+    assert_includes logger.printed, DummyError.name, 'Exception class should be printed'
+    assert_includes logger.printed, 'Test Error', 'Message should be printed'
   end
 
   def test_calls_through_to_the_app

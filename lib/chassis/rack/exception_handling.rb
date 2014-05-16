@@ -9,7 +9,7 @@ module Chassis
         begin
           @app.call env
         rescue => ex
-          env['rack.errors'].write ex.to_s
+          env['rack.errors'].write "#{ex.class}: #{ex.to_s}\n"
           env['rack.errors'].write ex.backtrace.join("\n")
           env['rack.errors'].flush
 
