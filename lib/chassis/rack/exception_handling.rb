@@ -2,7 +2,7 @@ module Chassis
   module Rack
     class ExceptionHandling
       def initialize(app)
-        @app
+        @app = app
       end
 
       def call(env)

@@ -43,4 +43,14 @@ class ExceptionHandlingTest < MiniTest::Unit::TestCase
 
     refute_empty logger.printed
   end
+
+  def test_calls_through_to_the_app
+    app = ->(env) { [200, { }, ['ok']] }
+
+    middleware = Chassis::Rack::ExceptionHandling.new(app)
+
+    status, headers, body = middleware.call({})
+
+    assert_equal 200, status
+  end
 end
