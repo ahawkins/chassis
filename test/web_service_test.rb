@@ -48,7 +48,7 @@ class WebServiceTest < MiniTest::Unit::TestCase
 
     assert_equal 400, last_response.status
     assert_json last_response
-    assert_error_message last_response
+    assert_error_message last_response, 'post'
   end
 
   def test_parses_json_requests
@@ -90,9 +90,11 @@ class WebServiceTest < MiniTest::Unit::TestCase
     assert_includes response.content_type, 'application/json'
   end
 
-  def assert_error_message(response)
+  def assert_error_message(response, regexp = //)
     json = JSON.load(response.body)
-    assert json.fetch('error').fetch('message')
+    message = json.fetch('error').fetch('message')
+    assert message
+    assert_match regexp, message
   end
 
   def assert_middleware(stack, klass)

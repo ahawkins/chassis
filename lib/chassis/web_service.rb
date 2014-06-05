@@ -6,7 +6,7 @@ require 'rack/deflater'
 module Chassis
   class WebService < Sinatra::Base
     ParameterMissingError = Chassis.error do |key|
-      %Q{Request did not provide "#{@key}"}
+      %Q{Request did not provide "#{key}"}
     end
 
     helpers do
