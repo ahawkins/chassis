@@ -32,6 +32,7 @@ module Chassis
     def save
       yield self if block_given?
       repo.save self
+      self
     end
 
     def delete

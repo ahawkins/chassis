@@ -109,4 +109,12 @@ class PersistenceTest < MiniTest::Unit::TestCase
 
     assert_equal 6, model.id
   end
+
+  def test_save_returns_the_model
+    FakeRepo.expects(:save)
+
+    model = Model.new id: 5
+
+    assert_equal model, model.save
+  end
 end
