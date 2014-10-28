@@ -46,8 +46,6 @@ module Chassis
     use Rack::NoRobots
     use Rack::Bouncer
     use ::Rack::BounceFavicon
-    use ::Rack::Deflater
-    use Rack::JsonBodyParser
 
     set :cors, false
 

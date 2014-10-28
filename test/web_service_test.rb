@@ -51,10 +51,6 @@ class WebServiceTest < MiniTest::Unit::TestCase
     assert_error_message last_response, 'post'
   end
 
-  def test_parses_json_requests
-    assert_middleware app.middleware, Chassis::Rack::JsonBodyParser
-  end
-
   def test_blocks_robots
     assert_middleware app.middleware, Chassis::Rack::NoRobots
   end
@@ -65,10 +61,6 @@ class WebServiceTest < MiniTest::Unit::TestCase
 
   def test_blocks_noob_favicon
     assert_middleware app.middleware, Rack::BounceFavicon
-  end
-
-  def test_uses_gzip
-    assert_middleware app.middleware, Rack::Deflater
   end
 
   def test_can_enable_cors
