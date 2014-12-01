@@ -63,6 +63,11 @@ class RepoDelegationTest < MiniTest::Unit::TestCase
     repo.all
   end
 
+  def test_each_delegates_to_the_target
+    target.expects(:each).with(Person)
+    repo.each
+  end
+
   def test_count_delegates_to_the_target
     target.expects(:count).with(Person)
     repo.count

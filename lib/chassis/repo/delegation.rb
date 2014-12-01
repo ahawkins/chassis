@@ -9,6 +9,10 @@ module Chassis
         backend.all object_class
       end
 
+      def each(&block)
+        backend.each object_class, &block
+      end
+
       def count
         backend.count object_class
       end
