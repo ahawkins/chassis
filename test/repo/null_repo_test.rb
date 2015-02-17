@@ -51,6 +51,6 @@ class NullRepoTest < MiniTest::Unit::TestCase
 
   def test_first_and_last_return_nil
     assert_nil repo.first(Person)
-    assert_nil repo.first(Person)
+    assert_nil repo.last(Person)
   end
 end
