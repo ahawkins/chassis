@@ -50,11 +50,11 @@ module Chassis
     end
 
     def query(*)
-
+      [ ]
     end
 
     def graph_query(*)
-
+      [ ]
     end
 
     def initialize_storage

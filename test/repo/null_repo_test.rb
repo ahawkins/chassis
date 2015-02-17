@@ -37,6 +37,14 @@ class NullRepoTest < MiniTest::Unit::TestCase
     assert_respond_to repo, :clear
   end
 
+  def test_query_returns_empty_array
+    assert_equal [ ], repo.query(Person, :selector)
+  end
+
+  def test_graph_query_returns_empty_array
+    assert_equal [ ], repo.graph_query(Person, :selector)
+  end
+
   def test_count_returns_no
     assert_equal 0, repo.count(Person)
   end
