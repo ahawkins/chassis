@@ -31,13 +31,14 @@ Gem::Specification.new do |spec|
   spec.add_dependency "harness-rack"
   spec.add_dependency "virtus"
   spec.add_dependency "virtus-dirty_attribute"
-  spec.add_dependency "faraday", "~> 0.9.0"
+  spec.add_dependency "faraday", "~> 2.3.0"
   spec.add_dependency "logger-better"
   spec.add_dependency "breaker"
 
-  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "bundler", "~> 2.3.14"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rack-test"
   spec.add_development_dependency "mocha"
   spec.add_development_dependency "redis"
+  spec.add_development_dependency "minitest"
 end
