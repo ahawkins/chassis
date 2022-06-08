@@ -105,19 +105,19 @@ module Chassis
     510 => HttpNotExtendedError
   }
 
-  class ServerErrorHandler < ::Faraday::Response::Middleware
+  class ServerErrorHandler < ::Faraday::Middleware
     def on_complete(env)
-      status = env.fetch :status
+      status = env.response.status
       return unless (400..600).include? status
       raise HTTP_STATUS_CODE_ERROR_MAP.fetch(status), env
     end
   end
 
-  class ParseJson < ::Faraday::Response::Middleware
+  class ParseJson < ::Faraday::Middleware
     def on_complete(env)
-      return if [204, 304].include? env.fetch(:status)
+      return if [204, 304].include? env.response.status
 
-      content_type = env.fetch(:response_headers).fetch('Content-Type', nil)
+      content_type = env.response_headers.fetch('Content-Type', nil)
 
       return unless content_type
       return unless content_type =~ /json/
@@ -163,7 +163,7 @@ module Chassis
     end
   end
 
-  class Logging < ::Faraday::Response::Middleware
+  class Logging < ::Faraday::Middleware
     def initialize(app, logger)
       @app, @logger = app, logger
     end
@@ -188,10 +188,10 @@ module Chassis
     end
 
     def dump_response(env)
-      status = env.fetch :status
+      status = env.response.status
       status_text = ::Rack::Utils::HTTP_STATUS_CODES.fetch status, 'Unknown'
       request_line = "> #{status.to_s.upcase} #{status_text}"
-      headers = env.fetch(:response_headers).map do |name, value|
+      headers = env.response_headers.map do |name, value|
         "> #{name}: #{value}"
       end.join("\n")
 

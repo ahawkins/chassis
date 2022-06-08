@@ -58,7 +58,7 @@ class FaradayTest < MiniTest::Unit::TestCase
 
       conn.adapter :test do |stub|
         stub.post 'test' do |env|
-          json = JSON.load env.fetch(:body)
+          json = JSON.load env.fetch(:request_body)
           [200, {'Content-Type' => 'text/plain'}, json.fetch('foo')]
         end
       end
@@ -78,7 +78,7 @@ class FaradayTest < MiniTest::Unit::TestCase
         stub.post 'test' do |env|
           [ 200, 
             {'Requested-Type' => env.fetch(:request_headers).fetch('Content-Type')},
-            env.fetch(:body)
+            env.fetch(:request_body)
           ]
         end
       end
